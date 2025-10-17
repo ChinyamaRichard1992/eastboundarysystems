@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - East Boundary Systems Payroll</title>
+    
+    <!-- PWA Meta Tags for Installable App -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="EBS Payroll">
+    <meta name="description" content="East Boundary Systems Payroll Management - Secure employee payroll system">
+    
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -787,5 +801,110 @@
     </div>
 
     <script src="auth-enhanced.js"></script>
+    
+    <!-- Service Worker Registration for Installable App -->
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered successfully');
+                        console.log('📱 App can now be installed!');
+                    })
+                    .catch(error => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Install prompt for Android/Windows
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent default install prompt
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom install button (optional - you can add a button in your UI)
+            console.log('💡 App can be installed! Look for "Install" option in browser menu.');
+            
+            // Optional: Show a custom install banner
+            showInstallPromotion();
+        });
+
+        // Track when app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('🎉 App installed successfully!');
+            deferredPrompt = null;
+        });
+
+        // Optional: Custom install promotion
+        function showInstallPromotion() {
+            // Create a subtle banner at the top
+            const banner = document.createElement('div');
+            banner.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+            `;
+            banner.innerHTML = `
+                <span>📱 Install this app for quick access!</span>
+                <button id="installBtn" style="
+                    background: white;
+                    color: #667eea;
+                    border: none;
+                    padding: 6px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 600;
+                ">Install Now</button>
+                <button id="dismissBtn" style="
+                    background: transparent;
+                    color: white;
+                    border: 1px solid white;
+                    padding: 6px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                ">Maybe Later</button>
+            `;
+            
+            document.body.prepend(banner);
+            
+            // Install button click
+            document.getElementById('installBtn').addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response: ${outcome}`);
+                    deferredPrompt = null;
+                }
+                banner.remove();
+            });
+            
+            // Dismiss button click
+            document.getElementById('dismissBtn').addEventListener('click', () => {
+                banner.remove();
+            });
+            
+            // Auto-dismiss after 30 seconds
+            setTimeout(() => {
+                if (banner.parentNode) {
+                    banner.remove();
+                }
+            }, 30000);
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create App Icons - East Boundary Systems</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #667eea; }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { transform: translateY(-2px); }
+        canvas {
+            border: 2px solid #ddd;
+            margin: 20px 0;
+            display: block;
+        }
+        .preview {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .icon-preview {
+            text-align: center;
+        }
+        .icon-preview img {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Create App Icons</h1>
+        <p>Generate icons for your installable app (Android & Windows)</p>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ol>
+                <li>Click "Generate Icons" below</li>
+                <li>Right-click each icon and "Save Image As..."</li>
+                <li>Save as:
+                    <ul>
+                        <li><strong>icon-192.png</strong> (192x192)</li>
+                        <li><strong>icon-512.png</strong> (512x512)</li>
+                    </ul>
+                </li>
+                <li>Place both files in the root folder: <code>C:\xampp\htdocs\eastboundarysystems\</code></li>
+            </ol>
+        </div>
+        
+        <button onclick="generateIcons()">🎨 Generate Icons</button>
+        
+        <div id="preview" class="preview"></div>
+        
+        <div id="success" class="success" style="display:none;">
+            <h3>✅ Icons Generated!</h3>
+            <p><strong>Next Steps:</strong></p>
+            <ol>
+                <li>Right-click each icon above</li>
+                <li>Select "Save Image As..."</li>
+                <li>Save to: <code>C:\xampp\htdocs\eastboundarysystems\</code></li>
+                <li>Name them: <strong>icon-192.png</strong> and <strong>icon-512.png</strong></li>
+                <li>Deploy to Vercel</li>
+                <li>Your app will be installable! 📱</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        function generateIcons() {
+            const sizes = [192, 512];
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            
+            sizes.forEach(size => {
+                // Create canvas
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // Background gradient
+                const gradient = ctx.createLinearGradient(0, 0, size, size);
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, size, size);
+                
+                // Add border
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = size * 0.02;
+                ctx.strokeRect(size * 0.05, size * 0.05, size * 0.9, size * 0.9);
+                
+                // Add text
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Main text "EAST" (top)
+                ctx.font = `bold ${size * 0.18}px Arial`;
+                ctx.fillText('EAST', size / 2, size * 0.28);
+                
+                // Main text "BOUNDARY" (middle)
+                ctx.font = `bold ${size * 0.18}px Arial`;
+                ctx.fillText('BOUNDARY', size / 2, size * 0.48);
+                
+                // Subtitle "Payroll System"
+                ctx.font = `${size * 0.09}px Arial`;
+                ctx.fillText('PAYROLL SYSTEM', size / 2, size * 0.68);
+                
+                // Add icon symbol (briefcase)
+                ctx.font = `${size * 0.12}px Arial`;
+                ctx.fillText('💼', size / 2, size * 0.85);
+                
+                // Convert to image
+                const img = document.createElement('img');
+                img.src = canvas.toDataURL('image/png');
+                img.width = size > 192 ? 256 : size;
+                
+                // Create preview container
+                const container = document.createElement('div');
+                container.className = 'icon-preview';
+                container.innerHTML = `
+                    <h3>${size}x${size}</h3>
+                    <p><strong>icon-${size}.png</strong></p>
+                `;
+                container.appendChild(img);
+                
+                preview.appendChild(container);
+            });
+            
+            document.getElementById('success').style.display = 'block';
+        }
+        
+        // Auto-generate on page load
+        window.onload = () => {
+            generateIcons();
+        };
+    </script>
+</body>
+</html>

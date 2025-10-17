@@ -1,7 +1,7 @@
 {
   "name": "East Boundary Systems - Payroll Management",
-  "short_name": "EBS Payroll",
-  "description": "Employee Payroll Management System with Real-time Sync",
+  "short_name": "East Boundary",
+  "description": "East Boundary Systems - Secure Employee Payroll Management with Real-time Sync",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#667eea",
