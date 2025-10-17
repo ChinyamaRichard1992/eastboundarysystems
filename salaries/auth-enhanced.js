@@ -154,7 +154,7 @@ class EnhancedAuthSystem {
         }
         
         // Check if email already exists
-        const users = this.getUsers();
+        const users = await this.getUsers();
         const emailExists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
         
         if (emailExists) {
@@ -352,7 +352,7 @@ class EnhancedAuthSystem {
 
         try {
             // Check for duplicate email one more time
-            const users = this.getUsers();
+            const users = await this.getUsers();
             if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
                 throw new Error('Email already registered. Please use a different email or login.');
             }
@@ -505,7 +505,7 @@ class EnhancedAuthSystem {
         btn.disabled = true;
         
         try {
-            const users = this.getUsers();
+            const users = await this.getUsers();
             
             // Double check email not already registered
             if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
@@ -530,9 +530,15 @@ class EnhancedAuthSystem {
                 loginHistory: []
             };
 
-            // Save user
-            users.push(newUser);
-            localStorage.setItem('ebs_users', JSON.stringify(users));
+            // Save user to cloud database
+            if (window.cloudDB && !window.cloudDB.useLocalStorage) {
+                await window.cloudDB.createUser(newUser);
+                console.log('✅ User saved to cloud database');
+            } else {
+                users.push(newUser);
+                localStorage.setItem('ebs_users', JSON.stringify(users));
+                console.log('📝 User saved to localStorage (fallback)');
+            }
             
             // Clear temporary data
             localStorage.removeItem('ebs_signup_otp');
@@ -617,7 +623,7 @@ class EnhancedAuthSystem {
 
         try {
             // Get users
-            const users = this.getUsers();
+            const users = await this.getUsers();
             const userIndex = users.findIndex(u => u.email === email);
             const user = users[userIndex];
 
@@ -650,15 +656,26 @@ class EnhancedAuthSystem {
                     // Lock account
                     user.accountLocked = true;
                     user.lockoutUntil = Date.now() + this.lockoutDuration;
-                    users[userIndex] = user;
-                    localStorage.setItem('ebs_users', JSON.stringify(users));
+                    
+                    // Update in cloud database
+                    if (window.cloudDB && !window.cloudDB.useLocalStorage) {
+                        await window.cloudDB.updateUser(user.id, user);
+                    } else {
+                        users[userIndex] = user;
+                        localStorage.setItem('ebs_users', JSON.stringify(users));
+                    }
                     
                     this.logActivity(`Account locked for: ${email}`, 'Security');
                     throw new Error('Account locked due to multiple failed login attempts. Please try again in 15 minutes.');
                 }
                 
-                users[userIndex] = user;
-                localStorage.setItem('ebs_users', JSON.stringify(users));
+                // Update failed attempts in cloud database
+                if (window.cloudDB && !window.cloudDB.useLocalStorage) {
+                    await window.cloudDB.updateUser(user.id, { failedLoginAttempts: user.failedLoginAttempts });
+                } else {
+                    users[userIndex] = user;
+                    localStorage.setItem('ebs_users', JSON.stringify(users));
+                }
                 
                 this.logActivity(`Failed login attempt for: ${email}`, 'Security');
                 throw new Error(`Incorrect password. ${remainingAttempts} attempt(s) remaining.`);
@@ -686,8 +703,20 @@ class EnhancedAuthSystem {
                 user.loginHistory = user.loginHistory.slice(-10);
             }
             
-            users[userIndex] = user;
-            localStorage.setItem('ebs_users', JSON.stringify(users));
+            // Update user in cloud database
+            if (window.cloudDB && !window.cloudDB.useLocalStorage) {
+                await window.cloudDB.updateUser(user.id, {
+                    failedLoginAttempts: user.failedLoginAttempts,
+                    accountLocked: user.accountLocked,
+                    lockoutUntil: user.lockoutUntil,
+                    lastLogin: user.lastLogin,
+                    loginHistory: user.loginHistory
+                });
+                console.log('✅ User login updated in cloud');
+            } else {
+                users[userIndex] = user;
+                localStorage.setItem('ebs_users', JSON.stringify(users));
+            }
 
             // Set current user session
             this.setCurrentUser(user);
