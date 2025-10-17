@@ -757,9 +757,18 @@ class EnhancedAuthSystem {
         }
         
         try {
-            console.log('📤 Sending request to send-otp-working.php...');
+            // Determine endpoint based on environment
+            const isLocalhost = window.location.hostname === 'localhost' || 
+                                window.location.hostname === '127.0.0.1';
             
-            const response = await fetch('send-otp-working.php', {
+            const endpoint = isLocalhost 
+                ? 'send-otp-working.php'  // Local PHP
+                : '/api/send-otp';         // Vercel serverless function
+            
+            console.log('📤 Sending request to:', endpoint);
+            console.log('🌐 Environment:', isLocalhost ? 'Local' : 'Production');
+            
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',

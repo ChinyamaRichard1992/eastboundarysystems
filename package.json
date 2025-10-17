@@ -1,0 +1,23 @@
+{
+  "name": "eastboundarysystems",
+  "version": "1.0.0",
+  "description": "Employee Payroll Management System with Real-time Cloud Database",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "payroll",
+    "employee-management",
+    "cloud",
+    "real-time"
+  ],
+  "author": "Chinyama Richard <chinyamarichard2019@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

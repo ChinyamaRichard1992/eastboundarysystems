@@ -357,7 +357,14 @@
             try {
                 console.log('Testing email configuration...');
                 
-                const response = await fetch('send-otp-working.php', {
+                // Determine endpoint based on environment
+                const isLocalhost = window.location.hostname === 'localhost' || 
+                                    window.location.hostname === '127.0.0.1';
+                const endpoint = isLocalhost ? 'send-otp-working.php' : '/api/send-otp';
+                
+                console.log('Testing via:', endpoint);
+                
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
