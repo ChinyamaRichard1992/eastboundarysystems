@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Gmail Authentication</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content { padding: 30px; }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .step h3 { color: #667eea; margin-bottom: 10px; }
+        .step p { color: #666; margin: 8px 0; line-height: 1.6; }
+        .form-group {
+            margin: 20px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Courier New', monospace;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        .alert.show { display: block; }
+        .alert-success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .alert-error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .code-box {
+            background: #2d2d2d;
+            color: #4ec9b0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .link-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+        .link-btn:hover { background: #218838; }
+        .current-status {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-key" style="font-size: 50px;"></i>
+            <h1 style="margin-top: 15px;">Fix Gmail Authentication</h1>
+            <p>Get your App Password working in 3 minutes</p>
+        </div>
+        
+        <div class="content">
+            <div class="current-status" id="currentStatus">
+                <h3 style="margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Current Status</h3>
+                <p id="statusText">Checking configuration...</p>
+            </div>
+            
+            <div class="alert alert-info show">
+                <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> 
+                You need a Gmail <strong>App Password</strong>, NOT your regular Gmail password!
+            </div>
+            
+            <div class="step">
+                <h3><i class="fas fa-shield-alt"></i> Step 1: Enable 2-Factor Authentication</h3>
+                <p>Gmail App Passwords only work with 2-Factor Authentication enabled.</p>
+                <a href="https://myaccount.google.com/security" target="_blank" class="link-btn">
+                    <i class="fas fa-external-link-alt"></i> Go to Google Security Settings
+                </a>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    Look for <strong>"2-Step Verification"</strong> and make sure it's ON (enabled)
+                </p>
+            </div>
+            
+            <div class="step">
+                <h3><i class="fas fa-key"></i> Step 2: Generate App Password</h3>
+                <p>Create a NEW App Password specifically for this system.</p>
+                <a href="https://myaccount.google.com/apppasswords" target="_blank" class="link-btn">
+                    <i class="fas fa-external-link-alt"></i> Create Gmail App Password
+                </a>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    1. Select App: <strong>Mail</strong><br>
+                    2. Select Device: <strong>Other (Custom name)</strong><br>
+                    3. Enter name: <strong>East Boundary Systems</strong><br>
+                    4. Click <strong>Generate</strong><br>
+                    5. Google will show you a 16-character password
+                </p>
+                <div class="code-box">
+Example: abcd efgh ijkl mnop
+                </div>
+                <p style="font-size: 13px; color: #dc3545; font-weight: 600;">
+                    ⚠️ Copy this password now! You won't see it again!
+                </p>
+            </div>
+            
+            <div class="step">
+                <h3><i class="fas fa-edit"></i> Step 3: Enter Your Details</h3>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Your Gmail Address</label>
+                    <input type="email" class="form-control" id="gmailAddress" placeholder="your-email@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Gmail App Password (16 characters)</label>
+                    <input type="text" class="form-control" id="appPassword" placeholder="Paste the 16-character password here" maxlength="20">
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        Spaces will be removed automatically. Just paste what Google gave you.
+                    </small>
+                </div>
+                
+                <button class="btn btn-primary" id="saveBtn">
+                    <i class="fas fa-save"></i> Save & Test Connection
+                </button>
+            </div>
+            
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle"></i>
+                <span id="successMessage"></span>
+            </div>
+            
+            <div class="alert alert-error" id="errorAlert">
+                <i class="fas fa-times-circle"></i>
+                <span id="errorMessage"></span>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="email-diagnostic.html" class="btn btn-primary" style="width: auto; display: inline-block;">
+                    <i class="fas fa-stethoscope"></i> Run Diagnostic Again
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check current status
+        window.onload = function() {
+            const email = localStorage.getItem('ebs_smtp_email');
+            const password = localStorage.getItem('ebs_smtp_password');
+            const statusText = document.getElementById('statusText');
+            
+            if (!email || !password) {
+                statusText.innerHTML = '❌ <strong>Not configured</strong> - Please enter your Gmail credentials below';
+            } else {
+                const passLen = password.length;
+                document.getElementById('gmailAddress').value = email;
+                
+                if (passLen === 16) {
+                    statusText.innerHTML = `✅ <strong>Configured</strong> - Email: ${email}<br>
+                        <span style="font-size: 13px;">App Password: ${password.substring(0, 4)}${'*'.repeat(8)}${password.substring(12)}</span><br>
+                        <span style="color: #dc3545;">But authentication is failing. Generate a NEW App Password and try again.</span>`;
+                } else {
+                    statusText.innerHTML = `⚠️ <strong>Configuration Issue</strong> - Email: ${email}<br>
+                        <span style="color: #dc3545;">App Password length: ${passLen} characters (should be 16)</span><br>
+                        <span style="font-size: 13px;">Please enter a valid 16-character App Password below.</span>`;
+                }
+            }
+        };
+        
+        // Save and test
+        document.getElementById('saveBtn').addEventListener('click', async function() {
+            const email = document.getElementById('gmailAddress').value.trim();
+            let password = document.getElementById('appPassword').value.trim();
+            
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving & Testing...';
+            
+            // Hide alerts
+            document.getElementById('successAlert').classList.remove('show');
+            document.getElementById('errorAlert').classList.remove('show');
+            
+            // Validate
+            if (!email || !password) {
+                showError('Please fill in both fields');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Save & Test Connection';
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showError('Please enter a valid Gmail address');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Save & Test Connection';
+                return;
+            }
+            
+            // Remove all spaces and special characters from password
+            password = password.replace(/\s/g, '').replace(/[^a-zA-Z0-9]/g, '');
+            
+            console.log('Original password length:', document.getElementById('appPassword').value.length);
+            console.log('Cleaned password length:', password.length);
+            
+            if (password.length !== 16) {
+                showError(`App Password must be exactly 16 characters. You entered ${password.length} characters after removing spaces.`);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Save & Test Connection';
+                return;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('ebs_smtp_host', 'smtp.gmail.com');
+            localStorage.setItem('ebs_smtp_port', '587');
+            localStorage.setItem('ebs_smtp_email', email);
+            localStorage.setItem('ebs_smtp_password', password);
+            localStorage.setItem('ebs_sender_name', 'East Boundary Systems');
+            
+            console.log('Saved configuration:');
+            console.log('Email:', email);
+            console.log('Password length:', password.length);
+            console.log('Password (masked):', password.substring(0, 4) + '********' + password.substring(12));
+            
+            // Test connection
+            try {
+                const response = await fetch('send-otp-working.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        name: 'Test User',
+                        otp: '999888',
+                        type: 'signup',
+                        smtpHost: 'smtp.gmail.com',
+                        smtpPort: 587,
+                        smtpEmail: email,
+                        smtpPassword: password,
+                        senderName: 'East Boundary Systems'
+                    })
+                });
+                
+                const result = await response.json();
+                console.log('Test result:', result);
+                
+                if (result.success) {
+                    showSuccess(`✅ SUCCESS! Configuration saved and test email sent to ${email}. Check your inbox for OTP: 999888`);
+                    
+                    setTimeout(() => {
+                        if (confirm('Email sent successfully! Run full diagnostic now?')) {
+                            window.location.href = 'email-diagnostic.html';
+                        }
+                    }, 2000);
+                } else {
+                    showError(`❌ Configuration saved, but test failed: ${result.error}\n\nPlease generate a NEW App Password and try again.`);
+                }
+            } catch (error) {
+                showError(`❌ Error testing connection: ${error.message}\n\nMake sure XAMPP is running.`);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Save & Test Connection';
+            }
+        });
+        
+        // Auto-remove spaces as user types
+        document.getElementById('appPassword').addEventListener('input', function(e) {
+            const cleaned = e.target.value.replace(/\s/g, '');
+            const length = cleaned.length;
+            
+            // Show character count
+            let color = length === 16 ? '#28a745' : (length < 16 ? '#dc3545' : '#ffc107');
+            e.target.style.borderColor = color;
+            
+            const small = e.target.nextElementSibling;
+            small.innerHTML = `${length}/16 characters`;
+            small.style.color = color;
+            small.style.fontWeight = '600';
+        });
+        
+        function showSuccess(message) {
+            const alert = document.getElementById('successAlert');
+            document.getElementById('successMessage').textContent = message;
+            alert.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function showError(message) {
+            const alert = document.getElementById('errorAlert');
+            document.getElementById('errorMessage').textContent = message;
+            alert.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

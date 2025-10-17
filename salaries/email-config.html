@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Configuration - East Boundary Systems</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header i {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #667eea;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-test {
+            background: #28a745;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .instructions code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .status-configured {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-not-configured {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-envelope-open-text"></i>
+            <h1>Email Configuration</h1>
+            <p>Configure SMTP settings for OTP delivery</p>
+        </div>
+
+        <div class="content">
+            <div id="statusBadge"></div>
+
+            <div class="alert alert-info show">
+                <strong><i class="fas fa-info-circle"></i> Important:</strong> 
+                Email configuration is required for OTP verification to work. Without proper email settings, users cannot complete registration.
+            </div>
+
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle"></i>
+                <span id="successMessage"></span>
+            </div>
+
+            <div class="alert alert-warning" id="warningAlert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="warningMessage"></span>
+            </div>
+
+            <div class="instructions">
+                <h3><i class="fas fa-graduation-cap"></i> Gmail SMTP Setup Instructions</h3>
+                <ol>
+                    <li>Go to your <strong>Google Account</strong> settings</li>
+                    <li>Enable <strong>2-Factor Authentication</strong> (if not already enabled)</li>
+                    <li>Go to <strong>Security</strong> → <strong>App Passwords</strong></li>
+                    <li>Select <strong>App:</strong> Mail, <strong>Device:</strong> Other (Custom name)</li>
+                    <li>Name it: <code>East Boundary Systems</code></li>
+                    <li>Google will generate a <strong>16-character password</strong></li>
+                    <li>Copy that password and paste it in the "SMTP Password" field below</li>
+                    <li>Enter your Gmail address in the "SMTP Email" field</li>
+                </ol>
+            </div>
+
+            <form id="emailConfigForm">
+                <div class="form-group">
+                    <label><i class="fas fa-server"></i> SMTP Server</label>
+                    <input type="text" class="form-control" id="smtpHost" value="smtp.gmail.com" readonly>
+                    <small style="color: #6c757d; display: block; margin-top: 5px;">Using Gmail SMTP (default)</small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-network-wired"></i> SMTP Port</label>
+                    <input type="number" class="form-control" id="smtpPort" value="587" readonly>
+                    <small style="color: #6c757d; display: block; margin-top: 5px;">Port 587 (TLS - Recommended)</small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Your Gmail Address</label>
+                    <input type="email" class="form-control" id="smtpEmail" placeholder="your-email@gmail.com" required>
+                    <small style="color: #6c757d; display: block; margin-top: 5px;">The Gmail account you'll use to send OTP emails</small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-key"></i> Gmail App Password</label>
+                    <input type="password" class="form-control" id="smtpPassword" placeholder="Enter 16-character app password" required>
+                    <small style="color: #6c757d; display: block; margin-top: 5px;">
+                        <strong>Not your Gmail password!</strong> Use the App Password from Google Account settings
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-signature"></i> Sender Name</label>
+                    <input type="text" class="form-control" id="senderName" value="East Boundary Systems" required>
+                    <small style="color: #6c757d; display: block; margin-top: 5px;">Name that appears as email sender</small>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Configuration
+                    </button>
+                    <button type="button" class="btn btn-test" id="testBtn">
+                        <i class="fas fa-paper-plane"></i> Send Test Email
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='auth.html'">
+                        <i class="fas fa-arrow-left"></i> Back to Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check current configuration status
+        function checkConfigStatus() {
+            const email = localStorage.getItem('ebs_smtp_email');
+            const password = localStorage.getItem('ebs_smtp_password');
+            const statusBadge = document.getElementById('statusBadge');
+            
+            if (email && password) {
+                statusBadge.innerHTML = '<div class="status-badge status-configured"><i class="fas fa-check-circle"></i> Email Configured</div>';
+                loadConfiguration();
+            } else {
+                statusBadge.innerHTML = '<div class="status-badge status-not-configured"><i class="fas fa-times-circle"></i> Not Configured</div>';
+            }
+        }
+
+        // Load existing configuration
+        function loadConfiguration() {
+            const email = localStorage.getItem('ebs_smtp_email');
+            const password = localStorage.getItem('ebs_smtp_password');
+            const senderName = localStorage.getItem('ebs_sender_name');
+            
+            if (email) document.getElementById('smtpEmail').value = email;
+            if (password) document.getElementById('smtpPassword').value = password;
+            if (senderName) document.getElementById('senderName').value = senderName;
+        }
+
+        // Save configuration
+        document.getElementById('emailConfigForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('smtpEmail').value.trim();
+            const password = document.getElementById('smtpPassword').value.trim();
+            const senderName = document.getElementById('senderName').value.trim();
+            const host = document.getElementById('smtpHost').value;
+            const port = document.getElementById('smtpPort').value;
+            
+            if (!email || !password || !senderName) {
+                showWarning('Please fill in all required fields');
+                return;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('ebs_smtp_host', host);
+            localStorage.setItem('ebs_smtp_port', port);
+            localStorage.setItem('ebs_smtp_email', email);
+            localStorage.setItem('ebs_smtp_password', password);
+            localStorage.setItem('ebs_sender_name', senderName);
+            
+            showSuccess('Configuration saved successfully! You can now use OTP verification.');
+            checkConfigStatus();
+        });
+
+        // Test email sending
+        document.getElementById('testBtn').addEventListener('click', async function() {
+            const email = document.getElementById('smtpEmail').value.trim();
+            const password = document.getElementById('smtpPassword').value.trim();
+            const senderName = document.getElementById('senderName').value.trim();
+            const host = document.getElementById('smtpHost').value;
+            const port = document.getElementById('smtpPort').value;
+            
+            if (!email || !password) {
+                showWarning('Please fill in email and password first');
+                return;
+            }
+            
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            try {
+                console.log('Testing email configuration...');
+                
+                const response = await fetch('send-otp-working.php', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        name: 'Test User',
+                        otp: '123456',
+                        type: 'signup',
+                        smtpHost: host,
+                        smtpPort: port,
+                        smtpEmail: email,
+                        smtpPassword: password,
+                        senderName: senderName
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Result:', result);
+                
+                if (result.success) {
+                    showSuccess('✅ Test email sent successfully! Check your inbox for OTP: 123456');
+                } else {
+                    showWarning('❌ Email sending failed: ' + (result.error || 'Unknown error') + 
+                        (result.debugInfo ? '\n\nDebug: ' + result.debugInfo : ''));
+                }
+            } catch (error) {
+                console.error('Test error:', error);
+                showWarning('❌ Error: ' + error.message + '\n\nMake sure XAMPP/Apache is running and check browser console for details.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Test Email';
+            }
+        });
+
+        function showSuccess(message) {
+            const alert = document.getElementById('successAlert');
+            const messageEl = document.getElementById('successMessage');
+            messageEl.textContent = message;
+            alert.classList.add('show');
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+
+        function showWarning(message) {
+            const alert = document.getElementById('warningAlert');
+            const messageEl = document.getElementById('warningMessage');
+            messageEl.textContent = message;
+            alert.classList.add('show');
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+
+        // Initialize
+        checkConfigStatus();
+    </script>
+</body>
+</html>

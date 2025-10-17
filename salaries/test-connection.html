@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Test - East Boundary Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header i {
+            font-size: 80px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success-box h2 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .success-box p {
+            color: #155724;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #0c5460;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .device-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .device-info p {
+            margin: 8px 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .device-info strong {
+            color: #667eea;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+            .header i {
+                font-size: 60px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-check-circle"></i>
+            <h1>✅ Connection Successful!</h1>
+            <p>Your device can access the server</p>
+        </div>
+
+        <div class="content">
+            <div class="success-box">
+                <h2>🎉 Great News!</h2>
+                <p>If you can see this page, it means your device is successfully connected to the East Boundary Systems server!</p>
+            </div>
+
+            <div class="device-info">
+                <p><strong>Your Access Method:</strong> <span id="accessMethod"></span></p>
+                <p><strong>Current URL:</strong> <span id="currentURL"></span></p>
+                <p><strong>Device Type:</strong> <span id="deviceType"></span></p>
+                <p><strong>Browser:</strong> <span id="browserInfo"></span></p>
+            </div>
+
+            <div class="info-box">
+                <h3>📱 What This Means:</h3>
+                <p>✅ Your device is on the correct network</p>
+                <p>✅ Apache web server is running</p>
+                <p>✅ Firewall is allowing connections</p>
+                <p>✅ You can now use the payroll system!</p>
+            </div>
+
+            <h3 style="margin: 30px 0 20px 0; color: #2c3e50;">Ready to Get Started?</h3>
+            
+            <a href="auth.html" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Go to Login/Signup
+            </a>
+            <a href="index.html" class="btn">
+                <i class="fas fa-home"></i> Go to Main App
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 East Boundary Systems. All rights reserved.</p>
+            <p style="margin-top: 5px;">Developed by Chinyama Richard | 0962299100</p>
+        </div>
+    </div>
+
+    <script>
+        // Detect device and connection info
+        window.addEventListener('DOMContentLoaded', function() {
+            // Access method
+            const hostname = window.location.hostname;
+            let accessMethod = '';
+            if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                accessMethod = 'Same Computer (localhost)';
+            } else {
+                accessMethod = 'Network Access (' + hostname + ')';
+            }
+            document.getElementById('accessMethod').textContent = accessMethod;
+
+            // Current URL
+            document.getElementById('currentURL').textContent = window.location.href;
+
+            // Device type
+            const userAgent = navigator.userAgent;
+            let deviceType = 'Desktop';
+            if (/Mobile|Android|iPhone|iPad|iPod/i.test(userAgent)) {
+                if (/iPad/i.test(userAgent)) {
+                    deviceType = 'Tablet (iPad)';
+                } else if (/Android/i.test(userAgent) && !/Mobile/i.test(userAgent)) {
+                    deviceType = 'Tablet (Android)';
+                } else {
+                    deviceType = 'Mobile Phone';
+                }
+            }
+            document.getElementById('deviceType').textContent = deviceType;
+
+            // Browser info
+            let browser = 'Unknown';
+            if (userAgent.indexOf('Firefox') > -1) {
+                browser = 'Firefox';
+            } else if (userAgent.indexOf('Chrome') > -1) {
+                browser = 'Chrome';
+            } else if (userAgent.indexOf('Safari') > -1) {
+                browser = 'Safari';
+            } else if (userAgent.indexOf('Edge') > -1) {
+                browser = 'Edge';
+            } else if (userAgent.indexOf('MSIE') > -1 || userAgent.indexOf('Trident') > -1) {
+                browser = 'Internet Explorer';
+            }
+            document.getElementById('browserInfo').textContent = browser;
+        });
+    </script>
+</body>
+</html>

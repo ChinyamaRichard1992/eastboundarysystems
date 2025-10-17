@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Payment Buttons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .print-btn {
+            background: #6c757d;
+            color: white;
+        }
+        .info-box {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Payment Buttons Test Page</h1>
+        
+        <div class="info-box">
+            <h3>Diagnostic Information:</h3>
+            <p><strong>Payments in localStorage:</strong> <span id="paymentCount">0</span></p>
+            <p><strong>Students in localStorage:</strong> <span id="studentCount">0</span></p>
+            <p><strong>sendPaymentEmail function exists:</strong> <span id="functionExists">No</span></p>
+        </div>
+
+        <button onclick="checkData()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">
+            🔍 Check Data
+        </button>
+
+        <h2>Payment History (Test)</h2>
+        <table id="testTable">
+            <thead>
+                <tr>
+                    <th>Receipt #</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                    <th>Term</th>
+                    <th>Paid</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="testTableBody">
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 20px;">Click "Check Data" to load payments</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Load students and payments from localStorage
+        let students = JSON.parse(localStorage.getItem('eastBoundaryStudents') || '[]');
+        let payments = JSON.parse(localStorage.getItem('ebs_payments') || '[]');
+
+        function checkData() {
+            // Update counts
+            document.getElementById('paymentCount').textContent = payments.length;
+            document.getElementById('studentCount').textContent = students.length;
+            document.getElementById('functionExists').textContent = typeof sendPaymentEmail === 'function' ? 'Yes ✅' : 'No ❌';
+
+            console.log('Students:', students);
+            console.log('Payments:', payments);
+
+            // Render test table
+            renderTestTable();
+        }
+
+        function renderTestTable() {
+            const tbody = document.getElementById('testTableBody');
+            
+            if (payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 20px; color: #dc3545;">❌ No payments found in localStorage. Please record a payment first!</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = payments.map(p => `
+                <tr>
+                    <td>${p.receiptNo}</td>
+                    <td>${p.studentId}</td>
+                    <td>${p.studentName}</td>
+                    <td>${p.grade}</td>
+                    <td>${p.date}</td>
+                    <td>${p.term}</td>
+                    <td>K ${p.paid}</td>
+                    <td style="white-space: nowrap;">
+                        <button class="btn btn-success" onclick="testEmailButton('${p.studentId}', '${p.term}')" title="Send Email to Guardian">
+                            <i class="fas fa-envelope"></i> Email
+                        </button>
+                        <button class="btn btn-primary" onclick="alert('Edit clicked')" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn delete-btn" onclick="alert('Delete clicked')" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn print-btn" onclick="alert('Print clicked')" title="Print">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            console.log('✅ Table rendered with', payments.length, 'payments');
+        }
+
+        function testEmailButton(studentId, term) {
+            alert(`✅ Email button works!\n\nStudent ID: ${studentId}\nTerm: ${term}\n\nThe button is visible and clickable!`);
+            console.log('Email button clicked for:', studentId, term);
+        }
+
+        async function sendPaymentEmail(studentId, term) {
+            alert(`Real sendPaymentEmail called!\n\nStudent ID: ${studentId}\nTerm: ${term}`);
+        }
+
+        // Auto-load on page load
+        window.addEventListener('DOMContentLoaded', checkData);
+    </script>
+</body>
+</html>

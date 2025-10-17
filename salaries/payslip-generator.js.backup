@@ -1,0 +1,561 @@
+// Payslip Generator - Creates NRC-protected PDF payslips
+
+class PayslipGenerator {
+    constructor(payrollSystem) {
+        this.system = payrollSystem;
+        this.currentPayslip = null;
+        this.init();
+    }
+
+    init() {
+        // Setup filter button event listener
+        const filterBtn = document.getElementById('filterPayslipsBtn');
+        const monthInput = document.getElementById('payslipMonth');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
+        const refreshBtn = document.getElementById('refreshPayslipsBtn');
+        
+        if (filterBtn) {
+            filterBtn.addEventListener('click', () => {
+                const month = monthInput?.value;
+                this.renderPayslips(month || null);
+                
+                if (month) {
+                    this.system.showNotification(`Filtered payslips for ${month}`, 'info');
+                } else {
+                    this.system.showNotification('Showing all payslips', 'info');
+                }
+            });
+        }
+
+        // Clear filter button
+        if (clearFilterBtn) {
+            clearFilterBtn.addEventListener('click', () => {
+                if (monthInput) {
+                    monthInput.value = '';
+                }
+                this.renderPayslips(null);
+                this.system.showNotification('Filter cleared - showing all payslips', 'info');
+            });
+        }
+
+        // Refresh button
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                const currentFilter = monthInput?.value || null;
+                this.renderPayslips(currentFilter);
+                this.system.showNotification('Payslips refreshed', 'success');
+            });
+        }
+
+        // Allow pressing Enter in month input to filter
+        if (monthInput) {
+            monthInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    filterBtn?.click();
+                }
+            });
+        }
+
+        // Render initial payslips when tab is loaded
+        this.renderPayslips();
+    }
+
+    generateBulkPayslips(payroll) {
+        if (!payroll || !payroll.records) {
+            this.system.showNotification('Invalid payroll data.', 'error');
+            return;
+        }
+
+        // Check if libraries are loaded
+        if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
+            this.system.showNotification('PDF libraries not loaded. Please refresh the page.', 'error');
+            return;
+        }
+
+        const action = confirm(
+            `Generate payslips for ${payroll.records.length} employees?\n\n` +
+            `Choose:\n` +
+            `• OK = Create records + Download all PDFs (may take time)\n` +
+            `• Cancel = Create records only (download individually later)`
+        );
+
+        let successCount = 0;
+        
+        // First, create all payslip records
+        payroll.records.forEach(record => {
+            try {
+                this.createPayslipRecord(record, payroll);
+                successCount++;
+            } catch (error) {
+                console.error(`Error generating payslip for ${record.employee_name}:`, error);
+            }
+        });
+
+        this.system.saveToStorage('ebs_payslips', this.system.payslips);
+        
+        // Update payroll status
+        const payrollIndex = this.system.payrolls.findIndex(p => p.payroll_id === payroll.payroll_id);
+        if (payrollIndex !== -1) {
+            this.system.payrolls[payrollIndex].payslips_generated = true;
+            this.system.payrolls[payrollIndex].payslips_generated_at = new Date().toISOString();
+            this.system.saveToStorage('ebs_payrolls', this.system.payrolls);
+        }
+
+        // Enable send button
+        document.getElementById('sendPayslipsBtn').disabled = false;
+
+        this.system.showNotification(`${successCount} payslip records created.`, 'success');
+        this.system.logActivity(`Generated ${successCount} payslips for ${payroll.monthName} ${payroll.year}`, 'Payslip Generation');
+
+        // If user chose to download PDFs
+        if (action) {
+            this.system.showNotification('Starting PDF generation... This may take a few moments.', 'info');
+            this.downloadAllPayslipsPDFs(payroll);
+        } else {
+            this.system.showNotification('Payslips created. Go to Payslips tab to download individually.', 'info');
+        }
+    }
+
+    async downloadAllPayslipsPDFs(payroll) {
+        const records = payroll.records;
+        const total = records.length;
+        let completed = 0;
+        let failed = 0;
+
+        this.system.showNotification(`Generating PDF 1 of ${total}...`, 'info');
+
+        for (let i = 0; i < records.length; i++) {
+            const record = records[i];
+            
+            try {
+                // Update progress
+                if (i > 0) {
+                    this.system.showNotification(`Generating PDF ${i + 1} of ${total}... (${completed} completed)`, 'info');
+                }
+
+                // Generate payslip HTML and download
+                await this.generateSinglePayslipPDF(record, payroll);
+                completed++;
+                
+                // Small delay between PDFs to prevent browser overload
+                await this.delay(800);
+                
+            } catch (error) {
+                console.error(`Failed to generate PDF for ${record.employee_name}:`, error);
+                failed++;
+            }
+        }
+
+        const message = `PDF generation complete!\n✅ ${completed} successful\n${failed > 0 ? '❌ ' + failed + ' failed' : ''}`;
+        this.system.showNotification(message, failed > 0 ? 'warning' : 'success');
+        this.system.logActivity(`Generated ${completed} PDF payslips (${failed} failed)`, 'Payslip PDF Generation');
+    }
+
+    async generateSinglePayslipPDF(record, payroll) {
+        return new Promise((resolve, reject) => {
+            const payslip = {
+                ...record,
+                payroll_id: payroll.payroll_id,
+                month: payroll.month,
+                monthName: payroll.monthName,
+                year: payroll.year,
+                approved_by: payroll.approved_by
+            };
+
+            // Create temporary container for PDF generation
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.width = '800px';
+            tempContainer.style.background = 'white';
+            tempContainer.style.padding = '20px';
+            tempContainer.innerHTML = this.generatePayslipHTML(payslip);
+            document.body.appendChild(tempContainer);
+
+            // Generate PDF
+            html2canvas(tempContainer, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgWidth = 190;
+                const pageHeight = 297;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 10;
+                
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                const filename = `Payslip_${payslip.employee_name.replace(/\s+/g, '_')}_${payslip.monthName}_${payslip.year}.pdf`;
+                pdf.save(filename);
+                
+                // Clean up
+                document.body.removeChild(tempContainer);
+                resolve();
+            }).catch(error => {
+                document.body.removeChild(tempContainer);
+                reject(error);
+            });
+        });
+    }
+
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    createPayslipRecord(record, payroll) {
+        // Check if payslip already exists
+        const existing = this.system.payslips.find(p => 
+            p.employee_id === record.employee_id && 
+            p.payroll_id === payroll.payroll_id
+        );
+
+        if (existing) {
+            // Update existing
+            Object.assign(existing, {
+                ...record,
+                payroll_id: payroll.payroll_id,
+                month: payroll.month,
+                monthName: payroll.monthName,
+                year: payroll.year,
+                status: 'Generated',
+                email_status: existing.email_status || 'Pending',
+                generated_at: new Date().toISOString()
+            });
+        } else {
+            // Create new
+            const payslip = {
+                payslip_id: this.generatePayslipId(),
+                payroll_id: payroll.payroll_id,
+                employee_id: record.employee_id,
+                employee_name: record.employee_name,
+                nrc_number: record.nrc_number,
+                email: record.email,
+                month: payroll.month,
+                monthName: payroll.monthName,
+                year: payroll.year,
+                ...record,
+                status: 'Generated',
+                email_status: 'Pending',
+                generated_at: new Date().toISOString(),
+                approved_by: payroll.approved_by
+            };
+            this.system.payslips.push(payslip);
+        }
+    }
+
+    previewPayslip(record, payroll) {
+        this.currentPayslip = {
+            ...record,
+            payroll_id: payroll.payroll_id,
+            month: payroll.month,
+            monthName: payroll.monthName,
+            year: payroll.year,
+            approved_by: payroll.approved_by
+        };
+
+        const modal = document.getElementById('payslipModal');
+        const content = document.getElementById('payslipContent');
+        
+        content.innerHTML = this.generatePayslipHTML(this.currentPayslip);
+        modal.classList.add('active');
+
+        // Setup event listeners
+        document.getElementById('closePayslipModal').onclick = () => modal.classList.remove('active');
+
+this.system.showNotification(`${successCount} payslip records created.`, 'success');
+this.system.logActivity(`Generated ${successCount} payslips for ${payroll.monthName} ${payroll.year}`, 'Payslip Generation');
+
+// If user chose to download PDFs
+if (action) {
+    this.system.showNotification('Starting PDF generation... This may take a few moments.', 'info');
+    this.downloadAllPayslipsPDFs(payroll);
+} else {
+    this.system.showNotification('Payslips created. Go to Payslips tab to download individually.', 'info');
+}
+}
+
+async downloadAllPayslipsPDFs(payroll) {
+    const records = payroll.records;
+    const total = records.length;
+    let completed = 0;
+    let failed = 0;
+
+    this.system.showNotification(`Generating PDF 1 of ${total}...`, 'info');
+
+    for (let i = 0; i < records.length; i++) {
+        const record = records[i];
+                        <strong>Approved by:</strong> ${payslip.approved_by || 'N/A'}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    downloadPayslipPDF(payslip) {
+        console.log('📄 Starting PDF generation for:', payslip.employee_name);
+        
+        // Check if required libraries are loaded
+        if (typeof html2canvas === 'undefined') {
+            alert('ERROR: html2canvas library not loaded.\n\nPossible causes:\n1. No internet connection\n2. CDN blocked\n\nSolution: Check internet connection and refresh page.');
+            console.error('html2canvas not loaded - check internet connection');
+            return;
+        }
+        
+        if (typeof window.jspdf === 'undefined') {
+            alert('ERROR: jsPDF library not loaded.\n\nPossible causes:\n1. No internet connection\n2. CDN blocked\n\nSolution: Check internet connection and refresh page.');
+            console.error('jsPDF not loaded - check internet connection');
+            return;
+        }
+        
+        console.log('✅ Libraries loaded successfully');
+        
+        // Get content element
+        const content = document.getElementById('payslipContent');
+        
+        if (!content) {
+            alert('ERROR: Payslip content not found.\n\nPlease refresh the page and try again.');
+            console.error('payslipContent element not found');
+            return;
+        }
+        
+        if (!content.innerHTML || content.innerHTML.trim() === '') {
+            alert('ERROR: Payslip content is empty.\n\nPlease generate the payslip first.');
+            console.error('payslipContent is empty');
+            return;
+        }
+        
+        console.log('✅ Content element found and populated');
+        
+        // Make sure content is visible and rendered
+        const originalDisplay = content.style.display;
+        content.style.display = 'block';
+        content.style.visibility = 'visible';
+        content.style.opacity = '1';
+        
+        this.system.showNotification('Generating PDF...', 'info');
+        
+        console.log('🎨 Starting html2canvas rendering...');
+        
+        html2canvas(content, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            logging: false,
+            useCORS: true,
+            allowTaint: false,
+            imageTimeout: 0
+        }).then(canvas => {
+            console.log('✅ Canvas created successfully');
+            
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            const imgWidth = 190;
+            const pageHeight = 297;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            let heightLeft = imgHeight;
+            let position = 10;
+            
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            const filename = `Payslip_${payslip.employee_name.replace(/\s+/g, '_')}_${payslip.monthName}_${payslip.year}.pdf`;
+            pdf.save(filename);
+            
+            console.log('✅ PDF saved:', filename);
+            
+            // Restore original display
+            content.style.display = originalDisplay;
+            
+            this.system.showNotification('✅ PDF downloaded successfully!', 'success');
+            this.system.logActivity(`Downloaded payslip for ${payslip.employee_name}`, 'Payslip Download');
+        }).catch(error => {
+            console.error('❌ PDF generation error:', error);
+            console.error('Error details:', error.stack);
+            
+            // Restore display
+            content.style.display = originalDisplay;
+            
+            alert('ERROR generating PDF:\n\n' + error.message + '\n\nCheck browser console (F12) for details.');
+            this.system.showNotification('Error generating PDF: ' + error.message, 'error');
+        });
+    }
+
+    renderPayslips(filterMonth = null) {
+        const tbody = document.getElementById('payslipsTableBody');
+        let payslips = [...this.system.payslips]; // Create a copy to avoid mutating original
+
+        if (filterMonth) {
+            payslips = payslips.filter(p => p.month === filterMonth);
+        }
+
+        if (payslips.length === 0) {
+            const message = filterMonth 
+                ? `No payslips found for ${filterMonth}. Try selecting a different month.`
+                : 'No payslips generated yet. Generate payroll and create payslips first.';
+            
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="empty-state">
+                        <i class="fas fa-file-invoice"></i>
+                        <p>${message}</p>
+                        ${filterMonth ? '<button class="btn btn-secondary" onclick="document.getElementById(\'payslipMonth\').value=\'\'; payslipGenerator.renderPayslips();">Clear Filter</button>' : ''}
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = payslips.sort((a, b) => 
+            new Date(b.generated_at) - new Date(a.generated_at)
+        ).map(payslip => `
+            <tr>
+                <td><strong>${payslip.employee_name}</strong><br><small>${payslip.employee_id}</small></td>
+                <td>${payslip.monthName} ${payslip.year}</td>
+                <td>K ${payslip.gross_salary.toFixed(2)}</td>
+                <td><strong style="color: #28a745;">K ${payslip.net_pay.toFixed(2)}</strong></td>
+                <td><span class="status-badge ${payslip.status.toLowerCase()}">${payslip.status}</span></td>
+                <td>${new Date(payslip.generated_at).toLocaleDateString()}</td>
+                <td><span class="status-badge ${payslip.email_status.toLowerCase()}">${payslip.email_status}</span></td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="payslipGenerator.viewPayslipById('${payslip.payslip_id}')" title="View">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="payslipGenerator.deletePayslipById('${payslip.payslip_id}')" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="btn btn-sm btn-success" onclick="payslipGenerator.emailPayslipById('${payslip.payslip_id}')" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    viewPayslipById(payslipId) {
+        const payslip = this.system.payslips.find(p => p.payslip_id === payslipId);
+        if (payslip) {
+            this.previewPayslip(payslip, { approved_by: payslip.approved_by });
+        }
+    }
+
+    downloadPayslipById(payslipId) {
+        const payslip = this.system.payslips.find(p => p.payslip_id === payslipId);
+        if (payslip) {
+            this.currentPayslip = payslip;
+            const content = document.getElementById('payslipContent');
+            content.innerHTML = this.generatePayslipHTML(payslip);
+            content.style.display = 'block';
+            content.style.visibility = 'visible';
+            content.style.position = 'absolute';
+            content.style.left = '-9999px';
+            setTimeout(() => {
+                this.downloadPayslipPDF(payslip);
+                content.style.position = '';
+                content.style.left = '';
+            }, 500);
+        }
+    }
+
+    emailPayslipById(payslipId) {
+        const payslip = this.system.payslips.find(p => p.payslip_id === payslipId);
+        if (payslip) {
+            this.emailSinglePayslip(payslip);
+        }
+    }
+
+    deletePayslipById(payslipId) {
+        const payslip = this.system.payslips.find(p => p.payslip_id === payslipId);
+        if (!payslip) return;
+
+        if (confirm(`Delete payslip for ${payslip.employee_name} (${payslip.monthName} ${payslip.year})?\n\nThis action cannot be undone.`)) {
+            // Remove payslip from array
+            this.system.payslips = this.system.payslips.filter(p => p.payslip_id !== payslipId);
+            this.system.saveToStorage('ebs_payslips', this.system.payslips);
+
+            // Log activity
+            this.system.logActivity(`Deleted payslip for ${payslip.employee_name} (${payslip.monthName} ${payslip.year})`, 'Payslip Management');
+            this.system.showNotification(`Payslip for ${payslip.employee_name} deleted successfully.`, 'success');
+
+            // Refresh the table
+            const monthInput = document.getElementById('payslipMonth');
+            const currentFilter = monthInput?.value || null;
+            this.renderPayslips(currentFilter);
+        }
+    }
+
+    deleteCurrentPayslip() {
+        if (!this.currentPayslip) return;
+
+        const payslip = this.currentPayslip;
+        
+        if (confirm(`Delete payslip for ${payslip.employee_name} (${payslip.monthName} ${payslip.year})?\n\nThis action cannot be undone.`)) {
+            // Remove payslip from array
+            this.system.payslips = this.system.payslips.filter(p => p.payslip_id !== payslip.payslip_id);
+            this.system.saveToStorage('ebs_payslips', this.system.payslips);
+
+            // Log activity
+            this.system.logActivity(`Deleted payslip for ${payslip.employee_name} (${payslip.monthName} ${payslip.year})`, 'Payslip Management');
+            this.system.showNotification(`Payslip for ${payslip.employee_name} deleted successfully.`, 'success');
+
+            // Close modal
+            const modal = document.getElementById('payslipModal');
+            modal.classList.remove('active');
+
+            // Refresh the table
+            const monthInput = document.getElementById('payslipMonth');
+            const currentFilter = monthInput?.value || null;
+            this.renderPayslips(currentFilter);
+        }
+    }
+
+    emailSinglePayslip(payslip) {
+        if (!payslip.email) {
+            this.system.showNotification(`No email address for ${payslip.employee_name}.`, 'warning');
+            return;
+        }
+
+        // Simulate email sending (since we don't have actual email server)
+        if (confirm(`Send payslip to ${payslip.employee_name} at ${payslip.email}?`)) {
+            // Update email status
+            const index = this.system.payslips.findIndex(p => p.payslip_id === payslip.payslip_id);
+            if (index !== -1) {
+                this.system.payslips[index].email_status = 'Sent';
+                this.system.payslips[index].email_sent_at = new Date().toISOString();
+                this.system.saveToStorage('ebs_payslips', this.system.payslips);
+            }
+
+            this.system.showNotification(`Payslip sent to ${payslip.email}`, 'success');
+            this.system.logActivity(`Sent payslip to ${payslip.employee_name} via email`, 'Payslip Email');
+            
+            // Refresh the table
+            this.renderPayslips();
+        }
+    }
+
+    generatePayslipId() {
+        return `PAYSLIP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+}

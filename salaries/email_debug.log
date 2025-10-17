@@ -1,0 +1,788 @@
+[2025-10-17 12:12:08] === New OTP Request ===
+[2025-10-17 12:12:08] Input: []
+[2025-10-17 12:12:08] EXCEPTION: Email is required
+[2025-10-17 12:12:10] === New OTP Request ===
+[2025-10-17 12:12:10] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test","otp":"000000","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"Test"}
+[2025-10-17 12:12:10] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:10] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:12:10] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:10] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:10] Connecting to smtp.gmail.com:587
+[2025-10-17 12:12:10] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426e6f03a76sm24250514f8f.36 - gsmtp
+
+[2025-10-17 12:12:10] SMTP > EHLO localhost
+[2025-10-17 12:12:10] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:12:10] SMTP > STARTTLS
+[2025-10-17 12:12:10] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:12:10] ERROR: STARTTLS failed: 250-SIZE 35882577
+
+[2025-10-17 12:12:10] EXCEPTION: STARTTLS failed: 250-SIZE 35882577
+
+[2025-10-17 12:12:11] === New OTP Request ===
+[2025-10-17 12:12:11] Input: {"email":"chinyamarichardcr@gmail.com","name":"Diagnostic Test","otp":"999999","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:12:11] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:11] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:12:11] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:11] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:12:11] Connecting to smtp.gmail.com:587
+[2025-10-17 12:12:11] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426ce57cce5sm40628748f8f.1 - gsmtp
+
+[2025-10-17 12:12:11] SMTP > EHLO localhost
+[2025-10-17 12:12:11] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:12:11] SMTP > STARTTLS
+[2025-10-17 12:12:11] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:12:11] ERROR: STARTTLS failed: 250-SIZE 35882577
+
+[2025-10-17 12:12:11] EXCEPTION: STARTTLS failed: 250-SIZE 35882577
+
+[2025-10-17 12:15:24] === New OTP Request ===
+[2025-10-17 12:15:24] Input: []
+[2025-10-17 12:15:24] EXCEPTION: Email is required
+[2025-10-17 12:15:25] === New OTP Request ===
+[2025-10-17 12:15:25] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test","otp":"000000","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"Test"}
+[2025-10-17 12:15:25] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:25] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:15:25] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:25] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:25] Connecting to smtp.gmail.com:587
+[2025-10-17 12:15:26] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-47114429679sm71540525e9.8 - gsmtp
+
+[2025-10-17 12:15:26] SMTP > EHLO localhost
+[2025-10-17 12:15:26] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:26] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:26] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:26] SMTP < 250-STARTTLS
+
+[2025-10-17 12:15:26] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:26] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:26] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:26] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:26] SMTP > STARTTLS
+[2025-10-17 12:15:26] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:15:26] Starting TLS encryption...
+[2025-10-17 12:15:27] TLS encryption enabled successfully
+[2025-10-17 12:15:27] SMTP > EHLO localhost
+[2025-10-17 12:15:27] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:27] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:27] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:27] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:15:27] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:27] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:27] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:27] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:27] SMTP > AUTH LOGIN
+[2025-10-17 12:15:28] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:15:28] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:15:28] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:15:28] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:15:28] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:15:28] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:28] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:29] === New OTP Request ===
+[2025-10-17 12:15:29] Input: {"email":"chinyamarichardcr@gmail.com","name":"Diagnostic Test","otp":"999999","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:15:29] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:29] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:15:29] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:29] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:29] Connecting to smtp.gmail.com:587
+[2025-10-17 12:15:29] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426ce5d0006sm40023199f8f.34 - gsmtp
+
+[2025-10-17 12:15:29] SMTP > EHLO localhost
+[2025-10-17 12:15:29] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:29] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:29] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:29] SMTP < 250-STARTTLS
+
+[2025-10-17 12:15:29] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:29] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:29] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:29] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:29] SMTP > STARTTLS
+[2025-10-17 12:15:30] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:15:30] Starting TLS encryption...
+[2025-10-17 12:15:31] TLS encryption enabled successfully
+[2025-10-17 12:15:31] SMTP > EHLO localhost
+[2025-10-17 12:15:31] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:31] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:31] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:31] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:15:31] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:31] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:31] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:31] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:31] SMTP > AUTH LOGIN
+[2025-10-17 12:15:31] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:15:31] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:15:31] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:15:31] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:15:32] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:15:32] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:32] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:44] === New OTP Request ===
+[2025-10-17 12:15:44] Input: []
+[2025-10-17 12:15:44] EXCEPTION: Email is required
+[2025-10-17 12:15:46] === New OTP Request ===
+[2025-10-17 12:15:46] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test","otp":"000000","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"Test"}
+[2025-10-17 12:15:46] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:46] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:15:46] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:46] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:46] Connecting to smtp.gmail.com:587
+[2025-10-17 12:15:46] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426ce583424sm39005557f8f.21 - gsmtp
+
+[2025-10-17 12:15:46] SMTP > EHLO localhost
+[2025-10-17 12:15:47] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:47] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:47] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:47] SMTP < 250-STARTTLS
+
+[2025-10-17 12:15:47] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:47] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:47] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:47] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:47] SMTP > STARTTLS
+[2025-10-17 12:15:47] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:15:47] Starting TLS encryption...
+[2025-10-17 12:15:48] TLS encryption enabled successfully
+[2025-10-17 12:15:48] SMTP > EHLO localhost
+[2025-10-17 12:15:48] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:48] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:48] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:48] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:15:48] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:48] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:48] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:48] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:48] SMTP > AUTH LOGIN
+[2025-10-17 12:15:48] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:15:48] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:15:49] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:15:49] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:15:49] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:15:49] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:49] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:49] === New OTP Request ===
+[2025-10-17 12:15:49] Input: {"email":"chinyamarichardcr@gmail.com","name":"Diagnostic Test","otp":"999999","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:15:49] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:49] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:15:49] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:49] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:15:49] Connecting to smtp.gmail.com:587
+[2025-10-17 12:15:50] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-4711443ec3asm73306555e9.11 - gsmtp
+
+[2025-10-17 12:15:50] SMTP > EHLO localhost
+[2025-10-17 12:15:50] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:50] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:50] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:50] SMTP < 250-STARTTLS
+
+[2025-10-17 12:15:50] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:50] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:50] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:50] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:50] SMTP > STARTTLS
+[2025-10-17 12:15:50] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:15:50] Starting TLS encryption...
+[2025-10-17 12:15:51] TLS encryption enabled successfully
+[2025-10-17 12:15:51] SMTP > EHLO localhost
+[2025-10-17 12:15:52] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:15:52] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:15:52] SMTP < 250-8BITMIME
+
+[2025-10-17 12:15:52] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:15:52] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:15:52] SMTP < 250-PIPELINING
+
+[2025-10-17 12:15:52] SMTP < 250-CHUNKING
+
+[2025-10-17 12:15:52] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:15:52] SMTP > AUTH LOGIN
+[2025-10-17 12:15:52] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:15:52] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:15:52] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:15:52] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:15:52] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:15:52] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:15:52] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:20:04] === New OTP Request ===
+[2025-10-17 12:20:04] Input: {"email":"chinyamarichardcr@gmail.com","name":"lunga zata","otp":"483474","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:20:04] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:20:04] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:20:04] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:20:04] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:20:04] Connecting to smtp.gmail.com:587
+[2025-10-17 12:20:04] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-471144b5c91sm73059535e9.11 - gsmtp
+
+[2025-10-17 12:20:04] SMTP > EHLO localhost
+[2025-10-17 12:20:04] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:20:04] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:20:04] SMTP < 250-8BITMIME
+
+[2025-10-17 12:20:04] SMTP < 250-STARTTLS
+
+[2025-10-17 12:20:04] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:20:04] SMTP < 250-PIPELINING
+
+[2025-10-17 12:20:04] SMTP < 250-CHUNKING
+
+[2025-10-17 12:20:04] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:20:04] SMTP > STARTTLS
+[2025-10-17 12:20:05] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:20:05] Starting TLS encryption...
+[2025-10-17 12:20:05] TLS encryption enabled successfully
+[2025-10-17 12:20:05] SMTP > EHLO localhost
+[2025-10-17 12:20:06] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:20:06] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:20:06] SMTP < 250-8BITMIME
+
+[2025-10-17 12:20:06] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:20:06] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:20:06] SMTP < 250-PIPELINING
+
+[2025-10-17 12:20:06] SMTP < 250-CHUNKING
+
+[2025-10-17 12:20:06] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:20:06] SMTP > AUTH LOGIN
+[2025-10-17 12:20:06] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:20:06] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:20:06] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:20:06] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:20:07] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:20:07] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:20:07] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:00] === New OTP Request ===
+[2025-10-17 12:22:00] Input: []
+[2025-10-17 12:22:00] EXCEPTION: Email is required
+[2025-10-17 12:22:01] === New OTP Request ===
+[2025-10-17 12:22:01] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test","otp":"000000","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"Test"}
+[2025-10-17 12:22:01] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:01] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:22:01] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:01] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:01] Connecting to smtp.gmail.com:587
+[2025-10-17 12:22:02] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-4711443ec3asm73610615e9.11 - gsmtp
+
+[2025-10-17 12:22:02] SMTP > EHLO localhost
+[2025-10-17 12:22:02] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:02] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:02] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:02] SMTP < 250-STARTTLS
+
+[2025-10-17 12:22:02] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:02] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:02] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:02] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:02] SMTP > STARTTLS
+[2025-10-17 12:22:02] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:22:02] Starting TLS encryption...
+[2025-10-17 12:22:03] TLS encryption enabled successfully
+[2025-10-17 12:22:03] SMTP > EHLO localhost
+[2025-10-17 12:22:03] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:03] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:03] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:04] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:22:04] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:04] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:04] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:04] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:04] SMTP > AUTH LOGIN
+[2025-10-17 12:22:04] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:22:04] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:22:04] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:22:04] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:22:04] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:22:04] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:04] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:05] === New OTP Request ===
+[2025-10-17 12:22:05] Input: {"email":"chinyamarichardcr@gmail.com","name":"Diagnostic Test","otp":"999999","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":587,"smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:22:05] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:05] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:22:05] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:05] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:05] Connecting to smtp.gmail.com:587
+[2025-10-17 12:22:05] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-471144239f4sm74971545e9.2 - gsmtp
+
+[2025-10-17 12:22:05] SMTP > EHLO localhost
+[2025-10-17 12:22:06] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:06] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:06] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:06] SMTP < 250-STARTTLS
+
+[2025-10-17 12:22:06] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:06] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:06] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:06] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:06] SMTP > STARTTLS
+[2025-10-17 12:22:06] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:22:06] Starting TLS encryption...
+[2025-10-17 12:22:07] TLS encryption enabled successfully
+[2025-10-17 12:22:07] SMTP > EHLO localhost
+[2025-10-17 12:22:07] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:07] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:07] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:07] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:22:07] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:07] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:07] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:07] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:07] SMTP > AUTH LOGIN
+[2025-10-17 12:22:07] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:22:07] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:22:07] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:22:07] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:22:08] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:22:08] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:08] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:54] === New OTP Request ===
+[2025-10-17 12:22:54] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test User","otp":"123456","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:22:54] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:54] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:22:54] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:54] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:22:54] Connecting to smtp.gmail.com:587
+[2025-10-17 12:22:55] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426e6f03a76sm24297876f8f.36 - gsmtp
+
+[2025-10-17 12:22:55] SMTP > EHLO localhost
+[2025-10-17 12:22:55] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:55] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:55] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:55] SMTP < 250-STARTTLS
+
+[2025-10-17 12:22:55] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:55] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:55] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:55] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:55] SMTP > STARTTLS
+[2025-10-17 12:22:55] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:22:55] Starting TLS encryption...
+[2025-10-17 12:22:56] TLS encryption enabled successfully
+[2025-10-17 12:22:56] SMTP > EHLO localhost
+[2025-10-17 12:22:57] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:22:57] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:22:57] SMTP < 250-8BITMIME
+
+[2025-10-17 12:22:57] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:22:57] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:22:57] SMTP < 250-PIPELINING
+
+[2025-10-17 12:22:57] SMTP < 250-CHUNKING
+
+[2025-10-17 12:22:57] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:22:57] SMTP > AUTH LOGIN
+[2025-10-17 12:22:57] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:22:57] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:22:57] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:22:57] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:22:58] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:22:58] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:22:58] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:23:20] === New OTP Request ===
+[2025-10-17 12:23:20] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test User","otp":"123456","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:23:20] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:20] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:23:20] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:20] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:20] Connecting to smtp.gmail.com:587
+[2025-10-17 12:23:20] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-4710cb36e7csm46395475e9.2 - gsmtp
+
+[2025-10-17 12:23:20] SMTP > EHLO localhost
+[2025-10-17 12:23:21] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:23:21] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:23:21] SMTP < 250-8BITMIME
+
+[2025-10-17 12:23:21] SMTP < 250-STARTTLS
+
+[2025-10-17 12:23:21] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:23:21] SMTP < 250-PIPELINING
+
+[2025-10-17 12:23:21] SMTP < 250-CHUNKING
+
+[2025-10-17 12:23:21] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:23:21] SMTP > STARTTLS
+[2025-10-17 12:23:21] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:23:21] Starting TLS encryption...
+[2025-10-17 12:23:22] TLS encryption enabled successfully
+[2025-10-17 12:23:22] SMTP > EHLO localhost
+[2025-10-17 12:23:22] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:23:22] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:23:22] SMTP < 250-8BITMIME
+
+[2025-10-17 12:23:22] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:23:22] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:23:22] SMTP < 250-PIPELINING
+
+[2025-10-17 12:23:22] SMTP < 250-CHUNKING
+
+[2025-10-17 12:23:22] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:23:22] SMTP > AUTH LOGIN
+[2025-10-17 12:23:22] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:23:22] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:23:23] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:23:23] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:23:23] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:23:23] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:23:23] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:23:46] === New OTP Request ===
+[2025-10-17 12:23:46] Input: {"email":"chinyamarichardcr@gmail.com","name":"Test User","otp":"123456","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichardcr@gmail.com","smtpPassword":"xvhd ivej jdsf lxaf","senderName":"East Boundary Systems"}
+[2025-10-17 12:23:46] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:46] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:23:46] SMTP User: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:46] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:23:46] Connecting to smtp.gmail.com:587
+[2025-10-17 12:23:46] SMTP greeting: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426ce5e8141sm39421631f8f.48 - gsmtp
+
+[2025-10-17 12:23:46] SMTP > EHLO localhost
+[2025-10-17 12:23:47] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:23:47] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:23:47] SMTP < 250-8BITMIME
+
+[2025-10-17 12:23:47] SMTP < 250-STARTTLS
+
+[2025-10-17 12:23:47] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:23:47] SMTP < 250-PIPELINING
+
+[2025-10-17 12:23:47] SMTP < 250-CHUNKING
+
+[2025-10-17 12:23:47] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:23:47] SMTP > STARTTLS
+[2025-10-17 12:23:47] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:23:47] Starting TLS encryption...
+[2025-10-17 12:23:48] TLS encryption enabled successfully
+[2025-10-17 12:23:48] SMTP > EHLO localhost
+[2025-10-17 12:23:48] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:23:48] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:23:48] SMTP < 250-8BITMIME
+
+[2025-10-17 12:23:48] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:23:48] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:23:48] SMTP < 250-PIPELINING
+
+[2025-10-17 12:23:48] SMTP < 250-CHUNKING
+
+[2025-10-17 12:23:48] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:23:48] SMTP > AUTH LOGIN
+[2025-10-17 12:23:48] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:23:48] SMTP > Y2hpbnlhbWFyaWNoYXJkY3JAZ21haWwuY29t
+[2025-10-17 12:23:49] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:23:49] SMTP > eHZoZCBpdmVqIGpkc2YgbHhhZg==
+[2025-10-17 12:23:49] SMTP < 535-5.7.8 Username and Password not accepted. For more information, go to
+
+[2025-10-17 12:23:49] ERROR: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:23:49] EXCEPTION: Password auth failed. Check your Gmail App Password!
+[2025-10-17 12:26:53] === New OTP Request ===
+[2025-10-17 12:26:53] Input: {"email":"chinyamarichard2019@gmail.com","name":"Test User","otp":"123456","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichard2019@gmail.com","smtpPassword":"qewz adsh odsa ykgf","senderName":"East Boundary Systems"}
+[2025-10-17 12:26:53] Attempting to send email to: chinyamarichard2019@gmail.com
+[2025-10-17 12:26:53] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:26:53] SMTP User: chinyamarichard2019@gmail.com
+[2025-10-17 12:26:53] Starting SMTP send to: chinyamarichard2019@gmail.com
+[2025-10-17 12:26:53] Connecting to smtp.gmail.com:587
+[2025-10-17 12:26:54] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:54] SMTP > EHLO localhost
+[2025-10-17 12:26:54] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:26:54] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:26:54] SMTP < 250-8BITMIME
+
+[2025-10-17 12:26:54] SMTP < 250-STARTTLS
+
+[2025-10-17 12:26:54] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:26:54] SMTP < 250-PIPELINING
+
+[2025-10-17 12:26:54] SMTP < 250-CHUNKING
+
+[2025-10-17 12:26:54] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:26:54] SMTP > STARTTLS
+[2025-10-17 12:26:54] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:26:54] Starting TLS encryption...
+[2025-10-17 12:26:55] TLS encryption enabled successfully
+[2025-10-17 12:26:55] SMTP > EHLO localhost
+[2025-10-17 12:26:55] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:26:55] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:26:55] SMTP < 250-8BITMIME
+
+[2025-10-17 12:26:55] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:26:55] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:26:55] SMTP < 250-PIPELINING
+
+[2025-10-17 12:26:55] SMTP < 250-CHUNKING
+
+[2025-10-17 12:26:55] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:26:55] SMTP > AUTH LOGIN
+[2025-10-17 12:26:55] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:26:55] SMTP > Y2hpbnlhbWFyaWNoYXJkMjAxOUBnbWFpbC5jb20=
+[2025-10-17 12:26:56] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:26:56] SMTP > cWV3eiBhZHNoIG9kc2EgeWtnZg==
+[2025-10-17 12:26:56] SMTP < 235 2.7.0 Accepted
+
+[2025-10-17 12:26:56] Authentication successful!
+[2025-10-17 12:26:56] SMTP > MAIL FROM: <chinyamarichard2019@gmail.com>
+[2025-10-17 12:26:56] SMTP < 250 2.1.0 OK 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:56] SMTP > RCPT TO: <chinyamarichard2019@gmail.com>
+[2025-10-17 12:26:56] SMTP < 250 2.1.5 OK 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:56] SMTP > DATA
+[2025-10-17 12:26:57] SMTP < 354 Go ahead 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:57] Send result: 250 2.0.0 OK  1760696817 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:57] SMTP > QUIT
+[2025-10-17 12:26:57] SMTP < 221 2.0.0 closing connection 5b1f17b1804b1-4711442d6c6sm71291295e9.6 - gsmtp
+
+[2025-10-17 12:26:57] Email sent successfully to chinyamarichard2019@gmail.com
+[2025-10-17 12:26:57] SUCCESS: Email sent to chinyamarichard2019@gmail.com
+[2025-10-17 12:28:16] === New OTP Request ===
+[2025-10-17 12:28:16] Input: {"email":"chinyamarichardcr@gmail.com","name":"lunga zata","otp":"766356","type":"signup","smtpHost":"smtp.gmail.com","smtpPort":"587","smtpEmail":"chinyamarichard2019@gmail.com","smtpPassword":"qewz adsh odsa ykgf","senderName":"East Boundary Systems"}
+[2025-10-17 12:28:16] Attempting to send email to: chinyamarichardcr@gmail.com
+[2025-10-17 12:28:16] SMTP Host: smtp.gmail.com:587
+[2025-10-17 12:28:16] SMTP User: chinyamarichard2019@gmail.com
+[2025-10-17 12:28:16] Starting SMTP send to: chinyamarichardcr@gmail.com
+[2025-10-17 12:28:16] Connecting to smtp.gmail.com:587
+[2025-10-17 12:28:16] SMTP greeting: 220 smtp.gmail.com ESMTP 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:16] SMTP > EHLO localhost
+[2025-10-17 12:28:17] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:28:17] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:28:17] SMTP < 250-8BITMIME
+
+[2025-10-17 12:28:17] SMTP < 250-STARTTLS
+
+[2025-10-17 12:28:17] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:28:17] SMTP < 250-PIPELINING
+
+[2025-10-17 12:28:17] SMTP < 250-CHUNKING
+
+[2025-10-17 12:28:17] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:28:17] SMTP > STARTTLS
+[2025-10-17 12:28:17] SMTP < 220 2.0.0 Ready to start TLS
+
+[2025-10-17 12:28:17] Starting TLS encryption...
+[2025-10-17 12:28:18] TLS encryption enabled successfully
+[2025-10-17 12:28:18] SMTP > EHLO localhost
+[2025-10-17 12:28:18] SMTP < 250-smtp.gmail.com at your service, [41.223.118.46]
+
+[2025-10-17 12:28:18] SMTP < 250-SIZE 35882577
+
+[2025-10-17 12:28:18] SMTP < 250-8BITMIME
+
+[2025-10-17 12:28:18] SMTP < 250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+
+[2025-10-17 12:28:18] SMTP < 250-ENHANCEDSTATUSCODES
+
+[2025-10-17 12:28:18] SMTP < 250-PIPELINING
+
+[2025-10-17 12:28:18] SMTP < 250-CHUNKING
+
+[2025-10-17 12:28:18] SMTP < 250 SMTPUTF8
+
+[2025-10-17 12:28:18] SMTP > AUTH LOGIN
+[2025-10-17 12:28:19] SMTP < 334 VXNlcm5hbWU6
+
+[2025-10-17 12:28:19] SMTP > Y2hpbnlhbWFyaWNoYXJkMjAxOUBnbWFpbC5jb20=
+[2025-10-17 12:28:19] SMTP < 334 UGFzc3dvcmQ6
+
+[2025-10-17 12:28:19] SMTP > cWV3eiBhZHNoIG9kc2EgeWtnZg==
+[2025-10-17 12:28:19] SMTP < 235 2.7.0 Accepted
+
+[2025-10-17 12:28:19] Authentication successful!
+[2025-10-17 12:28:19] SMTP > MAIL FROM: <chinyamarichard2019@gmail.com>
+[2025-10-17 12:28:19] SMTP < 250 2.1.0 OK 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:19] SMTP > RCPT TO: <chinyamarichardcr@gmail.com>
+[2025-10-17 12:28:20] SMTP < 250 2.1.5 OK 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:20] SMTP > DATA
+[2025-10-17 12:28:20] SMTP < 354 Go ahead 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:20] Send result: 250 2.0.0 OK  1760696900 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:20] SMTP > QUIT
+[2025-10-17 12:28:21] SMTP < 221 2.0.0 closing connection 5b1f17b1804b1-4711442d6c6sm71374265e9.6 - gsmtp
+
+[2025-10-17 12:28:21] Email sent successfully to chinyamarichardcr@gmail.com
+[2025-10-17 12:28:21] SUCCESS: Email sent to chinyamarichardcr@gmail.com

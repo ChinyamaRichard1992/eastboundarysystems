@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Browser Cache</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .keyboard {
+            display: inline-block;
+            background: #343a40;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        .button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px;
+            text-align: center;
+        }
+        .button:hover {
+            background: #5568d3;
+        }
+        .center {
+            text-align: center;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Clear Browser Cache to See Email Button</h1>
+        
+        <div class="warning">
+            <h3>⚠️ Problem:</h3>
+            <p><strong>Your browser is loading OLD cached files!</strong></p>
+            <p>The email button exists in the code, but your browser is showing an old version from memory.</p>
+        </div>
+
+        <div class="success">
+            <h3>✅ Solution: Hard Refresh</h3>
+            <p>Force your browser to reload the latest files from the server.</p>
+        </div>
+
+        <div class="steps">
+            <h3>📋 Step-by-Step Instructions:</h3>
+            
+            <div class="step">
+                <strong>Close this page</strong>
+            </div>
+            
+            <div class="step">
+                <strong>Go to Payment System:</strong><br>
+                <code>http://localhost/eastboundarysystems/payment/index.html</code>
+            </div>
+            
+            <div class="step">
+                <strong>Press these keys together:</strong><br>
+                <span class="keyboard">Ctrl</span> + <span class="keyboard">Shift</span> + <span class="keyboard">R</span>
+                <br><small>OR</small><br>
+                <span class="keyboard">Ctrl</span> + <span class="keyboard">F5</span>
+            </div>
+            
+            <div class="step">
+                <strong>Look at the Payment History table</strong><br>
+                You should now see <strong>4 buttons</strong> in the Actions column:
+                <ul style="margin-top: 10px;">
+                    <li>📧 <strong style="color: #28a745;">Send Email</strong> (GREEN)</li>
+                    <li>✏️ Edit (Blue)</li>
+                    <li>🗑️ Delete (Red)</li>
+                    <li>🖨️ Print (Gray)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="warning">
+            <h3>🔍 Still Not Working?</h3>
+            <p><strong>Try this method:</strong></p>
+            <ol>
+                <li>Press <span class="keyboard">Ctrl</span> + <span class="keyboard">Shift</span> + <span class="keyboard">Delete</span></li>
+                <li>Select "Cached images and files"</li>
+                <li>Click "Clear data"</li>
+                <li>Reload the payment page</li>
+            </ol>
+        </div>
+
+        <div class="center" style="margin-top: 30px;">
+            <a href="index.html" class="button">🔄 Open Payment System Now</a>
+            <a href="test-buttons.html" class="button" style="background: #28a745;">🧪 Test Page (Verify Buttons Work)</a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #e7f3ff; border-radius: 8px;">
+            <h4>💡 Why is this happening?</h4>
+            <p>Browsers cache (save) JavaScript files to load pages faster. When we update the code, the browser still uses the old saved version. A hard refresh forces the browser to download the latest version from the server.</p>
+        </div>
+    </div>
+</body>
+</html>

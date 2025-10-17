@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="refresh" content="0; url=index.html">
+    <title>Loading Payroll System...</title>
+</head>
+<body>
+    <script>
+        // Clear any cached data and redirect
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                for (let name of names) caches.delete(name);
+            });
+        }
+        window.location.href = 'index.html?' + Date.now();
+    </script>
+    <p>Loading payroll system...</p>
+</body>
+</html>

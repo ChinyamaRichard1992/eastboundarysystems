@@ -1,0 +1,127 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                 EAST BOUNDARY SYSTEMS - SECURITY FEATURES                    ║
+║                          Quick Reference Card                                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🔐 PASSWORD SECURITY
+─────────────────────────────────────────────────────────────────────────────
+✓ Minimum 8 characters required
+✓ Must contain uppercase letter (A-Z)
+✓ Must contain lowercase letter (a-z)
+✓ Must contain number (0-9)
+✓ Must contain special character (!@#$%^&*)
+✓ Real-time strength indicator (Weak/Medium/Strong)
+✓ Enhanced salted hashing (passwords never stored in plain text)
+
+🛡️ BRUTE FORCE PROTECTION
+─────────────────────────────────────────────────────────────────────────────
+✓ Maximum 5 failed login attempts allowed
+✓ Account auto-locks for 15 minutes after 5 failed attempts
+✓ Clear countdown of remaining attempts
+✓ Automatic unlock after lockout period expires
+✓ Failed attempts reset upon successful login
+
+⏰ SESSION MANAGEMENT
+─────────────────────────────────────────────────────────────────────────────
+✓ 1-hour session timeout on inactivity
+✓ Automatic session refresh on user activity
+✓ Warning alert 5 minutes before expiry
+✓ Secure logout clears all session data
+✓ Session validation on every page load
+✓ Automatic redirect to login on session expiry
+
+📝 ACTIVITY LOGGING
+─────────────────────────────────────────────────────────────────────────────
+✓ User registration tracking
+✓ Login/logout events logged
+✓ Failed login attempt recording
+✓ Account lockout events
+✓ Session timeout tracking
+✓ Timestamp and user details for all events
+
+🔑 AUTHENTICATION FEATURES
+─────────────────────────────────────────────────────────────────────────────
+✓ Secure signup with password confirmation
+✓ Email validation
+✓ Remember Me functionality (saves email only)
+✓ Password visibility toggle
+✓ Account status tracking (active/locked)
+✓ Last login timestamp
+
+🚀 ENTRY POINT SYSTEM
+─────────────────────────────────────────────────────────────────────────────
+✓ Root index.html redirects to authentication first
+✓ Auto-login for valid active sessions
+✓ Protected dashboard pages with auth-guard.js
+✓ Seamless redirect flow
+✓ Prevents unauthorized access to all modules
+
+📊 USER ACCOUNT TRACKING
+─────────────────────────────────────────────────────────────────────────────
+Each user account stores:
+  • Unique ID
+  • Full name
+  • Email address
+  • Encrypted password
+  • Role/Position
+  • Creation date
+  • Last login timestamp
+  • Failed login attempt counter
+  • Account locked status
+  • Lockout expiry time
+  • Active/inactive status
+
+🔄 HOW TO USE THE SYSTEM
+─────────────────────────────────────────────────────────────────────────────
+
+FIRST TIME USER:
+1. Navigate to: http://localhost/eastboundarysystems/
+2. Click "Sign Up" tab
+3. Fill in: Name, Email, Password, Confirm Password, Role
+4. Ensure password meets all requirements (checkmarks turn green)
+5. Agree to Terms & Conditions
+6. Click "Create Account"
+7. System redirects to Login automatically
+8. Enter email and password
+9. Click "Login" to access the system
+
+RETURNING USER:
+1. Navigate to: http://localhost/eastboundarysystems/
+2. If session valid → Auto-redirected to dashboard
+3. If session expired → Enter email and password
+4. Optional: Check "Remember Me" to save email
+5. Click "Login"
+
+⚠️ IMPORTANT SECURITY NOTES
+─────────────────────────────────────────────────────────────────────────────
+! Never share your password with anyone
+! Use unique passwords for each system
+! Always logout on shared computers
+! Don't use "Remember Me" on public computers
+! Keep your password secure and memorable
+! Contact admin if you forget your password
+
+🎯 PASSWORD EXAMPLES
+─────────────────────────────────────────────────────────────────────────────
+❌ WEAK:     password, 12345678, johndoe
+✅ STRONG:   EBS@School2025!, Secure#Pass123$, MyP@ssw0rd!
+
+📞 TECHNICAL SUPPORT
+─────────────────────────────────────────────────────────────────────────────
+Developer: Chinyama Richard
+Email:     chinyamarichard2019@gmail.com
+Phone:     0962299100
+
+🔐 SECURITY GUARANTEE
+─────────────────────────────────────────────────────────────────────────────
+✓ All passwords encrypted with salted hashing
+✓ Session data protected in browser storage
+✓ No plain text password storage
+✓ Activity logs for security auditing
+✓ Automatic session expiry for security
+✓ Brute force attack prevention
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    © 2025 East Boundary Systems                              ║
+║                         All Rights Reserved                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝

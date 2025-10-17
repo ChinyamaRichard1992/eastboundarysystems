@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email System Diagnostic - East Boundary Systems</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content { padding: 30px; }
+        .check-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+            background: #f8f9fa;
+        }
+        .check-item.pending { border-color: #6c757d; }
+        .check-item.checking { border-color: #17a2b8; background: #d1ecf1; }
+        .check-item.success { border-color: #28a745; background: #d4edda; }
+        .check-item.error { border-color: #dc3545; background: #f8d7da; }
+        .check-item h3 { margin-bottom: 8px; font-size: 16px; }
+        .check-item p { font-size: 14px; color: #666; margin: 5px 0; }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .solution-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .solution-box h4 { color: #856404; margin-bottom: 10px; }
+        .solution-box ol { margin-left: 20px; color: #856404; }
+        .solution-box li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-stethoscope" style="font-size: 50px;"></i>
+            <h1 style="margin-top: 15px;">Email System Diagnostic</h1>
+            <p>Checking all components for OTP delivery...</p>
+        </div>
+        
+        <div class="content">
+            <button class="btn btn-primary" id="runDiagnostic" style="width: 100%; margin-bottom: 20px;">
+                <i class="fas fa-play-circle"></i> Run Complete Diagnostic
+            </button>
+            
+            <div id="checks">
+                <div class="check-item pending" id="check1">
+                    <h3><i class="fas fa-server"></i> 1. Apache/XAMPP Server</h3>
+                    <p>Checking if web server is running...</p>
+                </div>
+                
+                <div class="check-item pending" id="check2">
+                    <h3><i class="fas fa-code"></i> 2. PHP Availability</h3>
+                    <p>Checking if PHP is working...</p>
+                </div>
+                
+                <div class="check-item pending" id="check3">
+                    <h3><i class="fas fa-file"></i> 3. Email Script</h3>
+                    <p>Checking if send-otp-working.php exists...</p>
+                </div>
+                
+                <div class="check-item pending" id="check4">
+                    <h3><i class="fas fa-cog"></i> 4. SMTP Configuration</h3>
+                    <p>Checking if email settings are configured...</p>
+                </div>
+                
+                <div class="check-item pending" id="check5">
+                    <h3><i class="fas fa-network-wired"></i> 5. SMTP Connection</h3>
+                    <p>Testing connection to Gmail SMTP server...</p>
+                </div>
+                
+                <div class="check-item pending" id="check6">
+                    <h3><i class="fas fa-envelope"></i> 6. Email Sending</h3>
+                    <p>Attempting to send test email...</p>
+                </div>
+            </div>
+            
+            <div id="solutions"></div>
+            
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="email-config.html" class="btn btn-primary">
+                    <i class="fas fa-cog"></i> Go to Email Configuration
+                </a>
+                <a href="auth.html" class="btn btn-primary" style="margin-left: 10px;">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('runDiagnostic').addEventListener('click', runDiagnostic);
+        
+        async function runDiagnostic() {
+            const btn = document.getElementById('runDiagnostic');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Diagnostic...';
+            
+            document.getElementById('solutions').innerHTML = '';
+            
+            // Check 1: Server Running
+            await checkItem('check1', async () => {
+                return { success: true, message: '✅ Web server is running' };
+            });
+            
+            // Check 2: PHP Working
+            await checkItem('check2', async () => {
+                try {
+                    const response = await fetch('send-otp-working.php', { method: 'POST', body: '{}' });
+                    if (response.ok || response.status === 400) {
+                        return { success: true, message: '✅ PHP is working correctly' };
+                    }
+                    throw new Error('PHP not responding');
+                } catch (e) {
+                    return { success: false, message: '❌ PHP not working', error: e.message };
+                }
+            });
+            
+            // Check 3: Script Exists
+            await checkItem('check3', async () => {
+                try {
+                    const response = await fetch('send-otp-working.php', { method: 'GET' });
+                    if (response.status !== 404) {
+                        return { success: true, message: '✅ Email script found' };
+                    }
+                    throw new Error('File not found');
+                } catch (e) {
+                    return { success: false, message: '❌ Email script not found', error: '404' };
+                }
+            });
+            
+            // Check 4: SMTP Config
+            await checkItem('check4', async () => {
+                const email = localStorage.getItem('ebs_smtp_email');
+                const password = localStorage.getItem('ebs_smtp_password');
+                
+                if (email && password) {
+                    return { 
+                        success: true, 
+                        message: `✅ SMTP configured for: ${email}` 
+                    };
+                } else {
+                    return { 
+                        success: false, 
+                        message: '❌ SMTP not configured',
+                        solution: 'smtp_config'
+                    };
+                }
+            });
+            
+            // Check 5: SMTP Connection
+            await checkItem('check5', async () => {
+                const email = localStorage.getItem('ebs_smtp_email');
+                const password = localStorage.getItem('ebs_smtp_password');
+                
+                if (!email || !password) {
+                    return { success: false, message: '⏭️ Skipped (SMTP not configured)' };
+                }
+                
+                try {
+                    const response = await fetch('send-otp-working.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: email,
+                            name: 'Test',
+                            otp: '000000',
+                            type: 'signup',
+                            smtpHost: 'smtp.gmail.com',
+                            smtpPort: 587,
+                            smtpEmail: email,
+                            smtpPassword: password,
+                            senderName: 'Test'
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        return { success: true, message: '✅ SMTP connection successful' };
+                    } else if (result.error && result.error.includes('auth')) {
+                        return { 
+                            success: false, 
+                            message: '❌ SMTP authentication failed',
+                            solution: 'smtp_auth'
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            message: '❌ SMTP error: ' + result.error,
+                            solution: 'smtp_error'
+                        };
+                    }
+                } catch (e) {
+                    return { 
+                        success: false, 
+                        message: '❌ Cannot connect to SMTP',
+                        error: e.message
+                    };
+                }
+            });
+            
+            // Check 6: Send Test Email
+            await checkItem('check6', async () => {
+                const email = localStorage.getItem('ebs_smtp_email');
+                const password = localStorage.getItem('ebs_smtp_password');
+                
+                if (!email || !password) {
+                    return { success: false, message: '⏭️ Skipped (SMTP not configured)' };
+                }
+                
+                try {
+                    const response = await fetch('send-otp-working.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: email,
+                            name: 'Diagnostic Test',
+                            otp: '999999',
+                            type: 'signup',
+                            smtpHost: 'smtp.gmail.com',
+                            smtpPort: 587,
+                            smtpEmail: email,
+                            smtpPassword: password,
+                            senderName: 'East Boundary Systems'
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        return { 
+                            success: true, 
+                            message: '✅ Test email sent successfully! Check your inbox for OTP: 999999'
+                        };
+                    } else {
+                        return { 
+                            success: false, 
+                            message: '❌ Failed to send email: ' + result.error,
+                            solution: 'send_failed'
+                        };
+                    }
+                } catch (e) {
+                    return { 
+                        success: false, 
+                        message: '❌ Error sending email: ' + e.message
+                    };
+                }
+            });
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-redo"></i> Run Diagnostic Again';
+        }
+        
+        async function checkItem(id, checkFunction) {
+            const item = document.getElementById(id);
+            item.className = 'check-item checking';
+            item.querySelector('p').textContent = 'Checking...';
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const result = await checkFunction();
+            
+            item.className = 'check-item ' + (result.success ? 'success' : 'error');
+            item.querySelector('p').innerHTML = result.message;
+            
+            if (!result.success && result.solution) {
+                showSolution(result.solution);
+            }
+            
+            if (result.error) {
+                item.querySelector('p').innerHTML += '<br><small style="color: #666;">Error: ' + result.error + '</small>';
+            }
+        }
+        
+        function showSolution(type) {
+            const solutions = document.getElementById('solutions');
+            let html = '';
+            
+            if (type === 'smtp_config') {
+                html = `
+                    <div class="solution-box">
+                        <h4><i class="fas fa-wrench"></i> Solution: Configure SMTP</h4>
+                        <ol>
+                            <li>Go to <a href="https://myaccount.google.com/apppasswords" target="_blank">Google App Passwords</a></li>
+                            <li>Generate a new App Password for "Mail"</li>
+                            <li>Copy the 16-character password</li>
+                            <li>Click "Go to Email Configuration" button below</li>
+                            <li>Enter your Gmail and paste the App Password</li>
+                            <li>Click "Save Configuration"</li>
+                        </ol>
+                    </div>
+                `;
+            } else if (type === 'smtp_auth') {
+                html = `
+                    <div class="solution-box">
+                        <h4><i class="fas fa-key"></i> Solution: Fix Authentication</h4>
+                        <ol>
+                            <li>Your Gmail App Password might be incorrect</li>
+                            <li>Generate a NEW App Password</li>
+                            <li>Make sure 2-Factor Authentication is enabled on Gmail</li>
+                            <li>Use the App Password (16 characters), NOT your regular Gmail password</li>
+                            <li>Update configuration with the new password</li>
+                        </ol>
+                        <div class="code-box">
+// Check your password in console:
+console.log(localStorage.getItem('ebs_smtp_password'));
+// Should show 16 characters (with spaces removed)
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'smtp_error') {
+                html = `
+                    <div class="solution-box">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Solution: SMTP Error</h4>
+                        <ol>
+                            <li>Check your internet connection</li>
+                            <li>Make sure Gmail SMTP is not blocked by firewall</li>
+                            <li>Verify port 587 is open</li>
+                            <li>Check email_debug.log file for detailed errors</li>
+                            <li>Try regenerating Gmail App Password</li>
+                        </ol>
+                    </div>
+                `;
+            } else if (type === 'send_failed') {
+                html = `
+                    <div class="solution-box">
+                        <h4><i class="fas fa-bug"></i> Solution: Email Send Failed</h4>
+                        <ol>
+                            <li>Open browser Console (F12)</li>
+                            <li>Check for error messages</li>
+                            <li>Check file: /salaries/email_debug.log</li>
+                            <li>Verify SMTP settings are correct</li>
+                            <li>Make sure XAMPP is running</li>
+                        </ol>
+                        <div class="code-box">
+// View debug log location:
+// c:\\xampp\\htdocs\\eastboundarysystems\\salaries\\email_debug.log
+                        </div>
+                    </div>
+                `;
+            }
+            
+            solutions.innerHTML += html;
+        }
+    </script>
+</body>
+</html>

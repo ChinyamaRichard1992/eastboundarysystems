@@ -1,0 +1,433 @@
+/* ==========================
+   PAYMENT SYSTEM STYLES
+========================== */
+
+/* Basic Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+header.header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.school-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.main-content {
+    margin-top: 90px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+}
+
+/* Section Headers */
+.content-header {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Forms */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;
+    padding: 1rem;
+}
+
+.form-group {
+    min-width: 260px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fff;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.print-btn {
+    background: #17a2b8;
+    color: white;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+/* Form Sections */
+.form-section {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    border-left: 4px solid #4a90e2;
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem 1rem;
+}
+
+/* Tables */
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.students-table th {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.students-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.students-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Fee Summary Cards */
+.summary-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.summary-value {
+    font-weight: 500;
+    color: #212529;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #fff;
+    z-index: 3000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-success { background: #28a745; }
+.notification-error { background: #dc3545; }
+.notification-info { background: #17a2b8; }
+
+/* Modals */
+#printModal {
+    display: none;
+    position: fixed;
+    z-index: 4000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Chart container */
+#feesPieChart {
+    width: 100%;
+    height: 300px; /* smaller height to avoid covering entire screen */
+    margin-top: 1rem;
+}
+
+/* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Ensures all elements fit all screen sizes
+============================================ */
+
+/* Table Container with Horizontal Scroll */
+.table-container,
+.payment-table-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+/* Table Responsive Wrapper */
+.students-table,
+table {
+    min-width: 700px; /* Minimum width before scrolling */
+    width: 100%;
+}
+
+/* Tablet and Mobile */
+@media (max-width: 768px) {
+    .main-content { 
+        padding: 1rem; 
+        margin-top: 80px; 
+    }
+    
+    .form-row { 
+        padding: 0.5rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .form-group { 
+        min-width: 100%;
+        width: 100%;
+    }
+    
+    .table-container,
+    .payment-table-container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+    
+    .students-table { 
+        font-size: 0.85rem;
+        min-width: 600px;
+    }
+    
+    .students-table th,
+    .students-table td {
+        padding: 0.6rem 0.4rem;
+        white-space: nowrap;
+    }
+    
+    .header { 
+        padding: 0.75rem 1rem; 
+    }
+    
+    .school-title { 
+        font-size: 1.2rem; 
+    }
+    
+    .header-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    #feesPieChart {
+        height: 250px;
+    }
+}
+
+/* Mobile Small Screens */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.5rem;
+        margin-top: 70px;
+    }
+    
+    .btn { 
+        padding: 0.6rem 1rem; 
+        font-size: 0.9rem; 
+    }
+    
+    .students-table { 
+        font-size: 0.75rem;
+        min-width: 500px;
+    }
+    
+    .students-table th, 
+    .students-table td { 
+        padding: 0.5rem 0.3rem; 
+    }
+    
+    .school-title {
+        font-size: 1rem;
+    }
+    
+    .form-section {
+        padding: 0.75rem;
+    }
+    
+    .section-title {
+        font-size: 1rem;
+    }
+    
+    .summary-card {
+        padding: 0.75rem;
+    }
+    
+    #feesPieChart {
+        height: 200px;
+    }
+}
+
+/* Extra Small Screens */
+@media (max-width: 360px) {
+    .students-table {
+        font-size: 0.7rem;
+        min-width: 450px;
+    }
+    
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Large Screens - Ensure proper layout */
+@media (min-width: 1400px) {
+    .main-content {
+        max-width: 1400px;
+    }
+    
+    .table-container,
+    .payment-table-container {
+        overflow-x: visible;
+    }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header {
+        padding: 0.5rem 1rem;
+    }
+    
+    .main-content {
+        margin-top: 60px;
+    }
+    
+    .school-title {
+        font-size: 1.1rem;
+    }
+}

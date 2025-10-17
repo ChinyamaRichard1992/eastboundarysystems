@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - East Boundary Systems Payroll</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -200px;
+            left: -200px;
+            animation: float 20s infinite alternate;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -150px;
+            animation: float 15s infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 450px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .auth-header i {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .auth-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            background: var(--white);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .auth-body {
+            padding: 35px 30px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 45px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 18px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-color);
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-check input {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .form-check label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary i {
+            margin-left: 8px;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert.show {
+            display: flex;
+            align-items: center;
+        }
+
+        .alert i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                max-width: 100%;
+                margin: 0 10px;
+            }
+
+            .auth-header {
+                padding: 30px 20px;
+            }
+
+            .auth-header i {
+                font-size: 50px;
+            }
+
+            .auth-header h1 {
+                font-size: 24px;
+            }
+
+            .auth-body {
+                padding: 25px 20px;
+            }
+
+            .form-control {
+                padding: 12px 40px;
+                font-size: 14px;
+            }
+
+            .btn-primary {
+                padding: 13px;
+                font-size: 15px;
+            }
+
+            .auth-tab {
+                padding: 15px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .auth-header {
+                padding: 25px 15px;
+            }
+
+            .auth-header i {
+                font-size: 45px;
+            }
+
+            .auth-header h1 {
+                font-size: 22px;
+            }
+
+            .auth-body {
+                padding: 20px 15px;
+            }
+
+            .form-control {
+                padding: 11px 35px;
+                font-size: 13px;
+            }
+
+            .input-icon {
+                font-size: 16px;
+                left: 12px;
+            }
+
+            .toggle-password {
+                font-size: 16px;
+                right: 12px;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-primary.loading .spinner {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .btn-primary.loading span {
+            opacity: 0.7;
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-weak { width: 33%; background: #dc3545; }
+        .strength-medium { width: 66%; background: #ffc107; }
+        .strength-strong { width: 100%; background: #28a745; }
+
+        /* Password Requirements */
+        .password-req {
+            list-style: none;
+            margin: 3px 0;
+            color: #856404;
+            transition: all 0.3s ease;
+        }
+
+        .password-req.met {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .password-req.met i {
+            color: #28a745;
+        }
+
+        /* Loading Spinner */
+        .btn-primary.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-primary .spinner {
+            display: none;
+        }
+
+        .btn-primary.loading .spinner {
+            display: inline-block;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* Email Status Icon */
+        .email-status-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            display: none;
+        }
+
+        .email-status-icon.checking {
+            display: block;
+            color: #6c757d;
+            animation: spin 1s linear infinite;
+        }
+
+        .email-status-icon.valid {
+            display: block;
+            color: #28a745;
+        }
+
+        .email-status-icon.invalid {
+            display: block;
+            color: #dc3545;
+        }
+
+        .email-status-icon::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        }
+
+        .email-status-icon.checking::before {
+            content: "\f110"; /* fa-spinner */
+        }
+
+        .email-status-icon.valid::before {
+            content: "\f058"; /* fa-check-circle */
+        }
+
+        .email-status-icon.invalid::before {
+            content: "\f06a"; /* fa-exclamation-circle */
+        }
+
+        /* OTP Input Styling */
+        #signupOTP {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 8px;
+            font-weight: bold;
+        }
+
+        /* Resend Button */
+        .btn-link {
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            color: #764ba2 !important;
+            text-decoration: underline !important;
+        }
+
+        .btn-link:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Header -->
+        <div class="auth-header">
+            <i class="fas fa-money-check-alt"></i>
+            <h1>East Boundary Systems</h1>
+            <p>Payroll Management System</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="login">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </div>
+            <div class="auth-tab" data-tab="signup">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="auth-body">
+            <!-- Alert Messages -->
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle"></i>
+                <span id="successMessage"></span>
+            </div>
+            <div class="alert alert-danger" id="errorAlert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMessage"></span>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-envelope"></i>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-lock"></i>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                        <i class="toggle-password fas fa-eye" data-target="loginPassword"></i>
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Login</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-user"></i>
+                        <input type="text" class="form-control" id="signupName" placeholder="Enter your full name" required autocomplete="name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-envelope"></i>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email" required autocomplete="email">
+                        <i class="email-status-icon" id="emailStatusIcon"></i>
+                    </div>
+                    <small id="emailValidationMessage" style="display: block; margin-top: 5px; font-size: 12px;"></small>
+                </div>
+                
+                <!-- OTP Verification Section (Hidden Initially) -->
+                <div class="form-group" id="otpSection" style="display: none;">
+                    <label><i class="fas fa-key"></i> Enter OTP Code</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-key"></i>
+                        <input type="text" class="form-control" id="signupOTP" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+                    </div>
+                    <div style="background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <small style="color: #0c5460; font-size: 12px;">
+                            <i class="fas fa-info-circle"></i> OTP sent to your email. Check your inbox (and spam folder). Valid for 10 minutes.
+                        </small>
+                    </div>
+                    <button type="button" class="btn btn-link" id="resendOTPBtn" style="padding: 5px 0; font-size: 13px; text-decoration: none; color: #667eea;">
+                        <i class="fas fa-redo"></i> Resend OTP <span id="resendTimer"></span>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-lock"></i>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Create a strong password" required autocomplete="new-password">
+                        <i class="toggle-password fas fa-eye" data-target="signupPassword"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    </div>
+                    <small id="passwordStrengthText" style="display: block; margin-top: 5px; font-weight: 600;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="input-icon fas fa-lock"></i>
+                        <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm your password" required autocomplete="new-password">
+                        <i class="toggle-password fas fa-eye" data-target="signupConfirmPassword"></i>
+                    </div>
+                </div>
+
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; border-radius: 5px; margin-bottom: 15px;">
+                    <strong style="color: #856404; font-size: 13px;"><i class="fas fa-shield-alt"></i> Password Requirements:</strong>
+                    <ul style="margin: 8px 0 0 20px; padding: 0; font-size: 12px; color: #856404;">
+                        <li class="password-req"><i class="fas fa-circle" style="font-size: 6px; margin-right: 5px;"></i> At least 8 characters</li>
+                        <li class="password-req"><i class="fas fa-circle" style="font-size: 6px; margin-right: 5px;"></i> One uppercase letter</li>
+                        <li class="password-req"><i class="fas fa-circle" style="font-size: 6px; margin-right: 5px;"></i> One lowercase letter</li>
+                        <li class="password-req"><i class="fas fa-circle" style="font-size: 6px; margin-right: 5px;"></i> One number</li>
+                        <li class="password-req"><i class="fas fa-circle" style="font-size: 6px; margin-right: 5px;"></i> One special character (!@#$%^&*)</li>
+                    </ul>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">I agree to Terms & Conditions</label>
+                </div>
+
+                <button type="submit" class="btn-primary" id="signupBtn">
+                    <span id="signupBtnText">Verify Email & Continue</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="spinner"></div>
+                </button>
+                
+                <div style="text-align: center; margin-top: 15px;">
+                    <small style="color: #666; font-size: 12px;">
+                        <i class="fas fa-shield-alt"></i> Secured with real-time email verification & OTP
+                    </small>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="auth-footer">
+            <p>&copy; 2025 East Boundary Systems. All rights reserved.</p>
+            <p style="margin-top: 5px; font-size: 12px;">
+                Developed by <a href="mailto:chinyamarichard2019@gmail.com">Chinyama Richard</a> | 0962299100
+            </p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                <a href="email-config.html" style="color: #667eea; text-decoration: none;">
+                    <i class="fas fa-cog"></i> Configure Email Settings
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script src="auth-enhanced.js"></script>
+</body>
+</html>

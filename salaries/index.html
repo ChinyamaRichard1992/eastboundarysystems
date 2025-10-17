@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Payroll Management - East Boundary School</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- PDF Libraries - Local copies (no internet needed) -->
+    <script src="jspdf.umd.min.js"></script>
+    <script src="html2canvas.min.js"></script>
+    <!-- Authentication Guard - Must be loaded first -->
+    <script src="auth-guard.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button class="hamburger-btn" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="school-title">East Boundary School</h1>
+            <div class="header-actions">
+                <span class="welcome-text">Payroll Management System</span>
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="currentUserName">Administrator</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Navigation</h2>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-item" data-section="students">
+                <a href="../student/index.html" class="menu-link">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Students</span>
+                </a>
+            </li>
+            <li class="menu-item" data-section="payments">
+                <a href="../payment/index.html" class="menu-link">
+                    <i class="fas fa-money-check-dollar"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="menu-item" data-section="teachers">
+                <a href="../teacher/index.html" class="menu-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Teachers</span>
+                </a>
+            </li>
+            <li class="menu-item active" data-section="salaries">
+                <a href="#salaries" class="menu-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Salaries</span>
+                </a>
+            </li>
+            <li class="menu-item" data-section="support-staff">
+                <a href="../support-staff/index.html" class="menu-link">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Support Staff</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="https://portal.zra.org.zm" target="_blank" class="menu-link">
+                    <i class="fas fa-building"></i>
+                    <span>ZRA</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="https://icare.napsa.co.zm/auth/signin" target="_blank" class="menu-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>NAPSA</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Overview -->
+        <section class="dashboard-section" id="dashboardSection">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar"></i> Payroll Dashboard
+            </h2>
+            
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon" style="background: #4a90e2;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Total Employees</h3>
+                        <p class="card-value" id="totalEmployees">0</p>
+                        <span class="card-label">Active Staff</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon" style="background: #28a745;">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Total Gross Salary</h3>
+                        <p class="card-value" id="totalGross">K 0.00</p>
+                        <span class="card-label">This Month</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon" style="background: #ffc107;">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Total NAPSA</h3>
+                        <p class="card-value" id="totalNapsa">K 0.00</p>
+                        <span class="card-label">Employee + Employer</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon" style="background: #17a2b8;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Total Net Pay</h3>
+                        <p class="card-value" id="totalNet">K 0.00</p>
+                        <span class="card-label">To be disbursed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="employees">
+                <i class="fas fa-users"></i> Employees
+            </button>
+            <button class="tab-btn" data-tab="payroll">
+                <i class="fas fa-calculator"></i> Payroll Processing
+            </button>
+            <button class="tab-btn" data-tab="payslips">
+                <i class="fas fa-file-invoice-dollar"></i> Payslips
+            </button>
+            <button class="tab-btn" data-tab="reports">
+                <i class="fas fa-chart-pie"></i> Reports
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+
+        <!-- Employees Tab -->
+        <section class="tab-content active" id="employeesTab">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Employee Management</h2>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="syncAllEmployeesBtn">
+                        <i class="fas fa-sync-alt"></i> Sync All Employees
+                    </button>
+                    <button class="btn btn-secondary" id="updateSalariesBtn">
+                        <i class="fas fa-edit"></i> Update Salaries
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="employeeSearch" placeholder="Search employees...">
+                </div>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Full Name</th>
+                            <th>Type</th>
+                            <th>NRC Number</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Department/Grade</th>
+                            <th>Basic Salary</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeesTableBody">
+                        <tr>
+                            <td colspan="10" class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <p>No employees found. Click "Sync All Employees" to import teachers and support staff.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Payroll Processing Tab -->
+        <section class="tab-content" id="payrollTab">
+            <div class="section-header">
+                <h2><i class="fas fa-calculator"></i> Payroll Processing</h2>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="runPayrollBtn">
+                        <i class="fas fa-play"></i> Run Monthly Payroll
+                    </button>
+                </div>
+            </div>
+
+            <div class="payroll-filter">
+                <div class="form-group">
+                    <label>Select Month & Year</label>
+                    <input type="month" id="payrollMonth" class="form-control">
+                </div>
+                <button class="btn btn-secondary" id="loadPayrollBtn">
+                    <i class="fas fa-download"></i> Load Payroll
+                </button>
+            </div>
+
+            <div class="payroll-summary">
+                <div class="summary-card">
+                    <h4>Payroll Status</h4>
+                    <p class="status-badge" id="payrollStatus">Not Generated</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Total Employees</h4>
+                    <p class="summary-value" id="payrollEmployeeCount">0</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Total Gross</h4>
+                    <p class="summary-value" id="payrollTotalGross">K 0.00</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Total Net Pay</h4>
+                    <p class="summary-value" id="payrollTotalNet">K 0.00</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Basic Salary</th>
+                            <th>Allowances</th>
+                            <th>Gross Salary</th>
+                            <th>NAPSA (Employee)</th>
+                            <th>NAPSA (Employer)</th>
+                            <th>Loans/Advances</th>
+                            <th>Total Deductions</th>
+                            <th>Net Pay</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payrollTableBody">
+                        <tr>
+                            <td colspan="10" class="empty-state">
+                                <i class="fas fa-calculator"></i>
+                                <p>Select a month and run payroll to see results.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="payroll-actions" id="payrollActionsBar" style="display: none;">
+                <button class="btn btn-success" id="approvePayrollBtn">
+                    <i class="fas fa-check-circle"></i> Approve Payroll
+                </button>
+                <button class="btn btn-primary" id="generatePayslipsBtn">
+                    <i class="fas fa-file-pdf"></i> Generate All Payslips
+                </button>
+                <button class="btn btn-warning" id="sendPayslipsBtn" disabled>
+                    <i class="fas fa-envelope"></i> Send All Payslips via Email
+                </button>
+                <button class="btn btn-danger" id="deleteEmployeeBtn">
+                    <i class="fas fa-user-times"></i> Delete Employee
+                </button>
+                <button class="btn btn-danger" id="deletePayrollBtn">
+                    <i class="fas fa-trash"></i> Delete Payroll
+                </button>
+            </div>
+        </section>
+
+        <!-- Payslips Tab -->
+        <section class="tab-content" id="payslipsTab">
+            <div class="section-header">
+                <h2><i class="fas fa-file-invoice-dollar"></i> Payslip Management</h2>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refreshPayslipsBtn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="payroll-filter">
+                <div class="form-group">
+                    <label>Filter by Month</label>
+                    <input type="month" id="payslipMonth" class="form-control">
+                </div>
+                <button class="btn btn-secondary" id="filterPayslipsBtn">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-secondary" id="clearFilterBtn">
+                    <i class="fas fa-times"></i> Clear Filter
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Month</th>
+                            <th>Gross Salary</th>
+                            <th>Net Pay</th>
+                            <th>Status</th>
+                            <th>Generated Date</th>
+                            <th>Email Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payslipsTableBody">
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                <i class="fas fa-file-invoice"></i>
+                                <p>No payslips generated yet.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reports Tab -->
+        <section class="tab-content" id="reportsTab">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-pie"></i> Payroll Reports</h2>
+            </div>
+
+            <div class="reports-grid">
+                <div class="report-card" id="monthlyPayrollReport">
+                    <div class="report-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Monthly Payroll Summary</h3>
+                    <p>Complete overview of monthly salary disbursement</p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i> Generate
+                    </button>
+                </div>
+
+                <div class="report-card" id="napsaReport">
+                    <div class="report-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>NAPSA Contribution Report</h3>
+                    <p>Employee and employer NAPSA contributions</p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i> Generate
+                    </button>
+                </div>
+
+                <div class="report-card" id="paymentHistoryReport">
+                    <div class="report-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Employee Payment History</h3>
+                    <p>Individual employee salary history</p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i> Generate
+                    </button>
+                </div>
+
+                <div class="report-card" id="loanReport">
+                    <div class="report-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <h3>Loan Deduction Summary</h3>
+                    <p>Track all active loans and advances</p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i> Generate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Viewer -->
+            <div id="reportViewer" class="report-viewer" style="display: none;">
+                <div class="report-header">
+                    <h3 id="reportTitle">Report Title</h3>
+                    <div class="report-actions">
+                        <button class="btn btn-secondary" id="exportPDFBtn">
+                            <i class="fas fa-file-pdf"></i> Export PDF
+                        </button>
+                        <button class="btn btn-secondary" id="exportExcelBtn">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </button>
+                        <button class="btn btn-danger" id="closeReportBtn">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+                <div id="reportContent" class="report-content">
+                    <!-- Report content will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Tab -->
+        <section class="tab-content" id="settingsTab">
+            <div class="section-header">
+                <h2><i class="fas fa-cog"></i> Payroll Settings</h2>
+            </div>
+
+            <div class="settings-container">
+                <div class="settings-card">
+                    <h3><i class="fas fa-percentage"></i> NAPSA Configuration</h3>
+                    <div class="form-group">
+                        <label>Employee Contribution Rate (%)</label>
+                        <input type="number" id="napsaEmployeeRate" value="5" step="0.1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Employer Contribution Rate (%)</label>
+                        <input type="number" id="napsaEmployerRate" value="5" step="0.1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Maximum Monthly Contribution (K)</label>
+                        <input type="number" id="napsaMaxContribution" value="1708.20" step="0.01" class="form-control">
+                    </div>
+                    <button class="btn btn-primary" id="saveNapsaSettingsBtn">
+                        <i class="fas fa-save"></i> Save NAPSA Settings
+                    </button>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-envelope"></i> Email Configuration (Gmail SMTP)</h3>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Gmail Address (Sender)</label>
+                        <input type="email" id="gmailAddress" placeholder="youremail@gmail.com" class="form-control">
+                        <small style="color: #7f8c8d;">The Gmail address to send payslips from</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-key"></i> Gmail App Password</label>
+                        <input type="password" id="gmailAppPassword" placeholder="16-character app password" class="form-control">
+                        <small style="color: #7f8c8d;">Get this from: Google Account → Security → 2-Step Verification → App Passwords</small>
+                        <small style="color: #28a745; font-weight: bold; display: block; margin-top: 5px;">🔒 Password will be saved permanently and securely in your browser</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> Sender Name</label>
+                        <input type="text" id="senderName" value="East Boundary Systems - Payroll" class="form-control">
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #ffc107;">
+                        <strong>📌 Setup Instructions:</strong>
+                        <ol style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                            <li>Go to <a href="https://myaccount.google.com/security" target="_blank">Google Account Security</a></li>
+                            <li>Enable <strong>2-Step Verification</strong></li>
+                            <li>Go to <strong>App Passwords</strong></li>
+                            <li>Generate a password for "Mail" app</li>
+                            <li>Copy and paste it above</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Company Email (Reply-To)</label>
+                        <input type="email" id="companyEmail" value="payroll@eastboundary.com" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Subject Template</label>
+                        <input type="text" id="emailSubject" value="Your Payslip for {month} {year}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Message Template</label>
+                        <textarea id="emailTemplate" class="form-control" rows="4">Dear {employee_name},
+
+Please find attached your payslip for {month} {year}.
+The PDF is password-protected with your NRC number.
+
+Best regards,
+East Boundary School</textarea>
+                    </div>
+                    
+                    <button class="btn btn-success" id="testEmailBtn" style="margin-right: 10px;">
+                        <i class="fas fa-paper-plane"></i> Test Email Connection
+                    </button>
+                    <button class="btn btn-primary" id="saveEmailSettingsBtn">
+                        <i class="fas fa-save"></i> Save Email Settings
+                    </button>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-shield-alt"></i> Security & Access</h3>
+                    <div class="form-group">
+                        <label>Current User Role</label>
+                        <select id="userRole" class="form-control">
+                            <option value="CEO">CEO</option>
+                            <option value="Assistant CEO">Assistant CEO</option>
+                            <option value="Accountant">Accountant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Require Approval Before Payslips</label>
+                        <input type="checkbox" id="requireApproval" checked>
+                        <span>Enable approval workflow</span>
+                    </div>
+                    <button class="btn btn-primary" id="saveSecuritySettingsBtn">
+                        <i class="fas fa-save"></i> Save Security Settings
+                    </button>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-database"></i> Backup & Restore</h3>
+                    <div class="backup-actions">
+                        <button class="btn btn-success" id="backupDataBtn">
+                            <i class="fas fa-download"></i> Backup All Data
+                        </button>
+                        <button class="btn btn-warning" id="restoreDataBtn">
+                            <i class="fas fa-upload"></i> Restore from Backup
+                        </button>
+                        <input type="file" id="restoreFileInput" accept=".json" style="display: none;">
+                    </div>
+                    <p class="help-text">Last backup: <span id="lastBackupDate">Never</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Salary Update Modal -->
+    <div id="salaryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="salaryModalTitle">Update Salary Information</h2>
+                <button class="close-modal" id="closeSalaryModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="salaryForm">
+                <div class="modal-body">
+                    <input type="hidden" name="employee_id" id="salaryEmployeeId">
+                    <div class="form-group">
+                        <label>Employee Name</label>
+                        <input type="text" id="salaryEmployeeName" readonly class="form-control" style="background: #f0f0f0;">
+                    </div>
+                    <div class="form-group">
+                        <label>Employee Type</label>
+                        <input type="text" id="salaryEmployeeType" readonly class="form-control" style="background: #f0f0f0;">
+                    </div>
+                    <div class="form-group">
+                        <label>Basic Salary (K) <span class="required">*</span></label>
+                        <input type="number" name="basic_salary" required step="0.01" class="form-control" id="salaryBasicAmount">
+                    </div>
+                    <div class="form-group">
+                        <label>Allowances (K)</label>
+                        <input type="number" name="allowances" step="0.01" value="0" class="form-control" id="salaryAllowances">
+                    </div>
+                    <div class="form-group">
+                        <label>NAPSA Number</label>
+                        <input type="text" name="napsa_number" class="form-control" id="salaryNapsaNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Details (Optional)</label>
+                        <input type="text" name="bank_details" class="form-control" placeholder="Bank Name, Account Number" id="salaryBankDetails">
+                    </div>
+                    <div style="background: #f0f8ff; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="font-size: 0.9rem; margin: 0;"><strong>Gross Salary:</strong> <span id="salaryGrossPreview">K 0.00</span></p>
+                        <p style="font-size: 0.85rem; margin: 0.5rem 0 0 0; color: #666;">NAPSA: 5% (max K1,708.20)</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelSalaryBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Salary
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loan/Advance Modal -->
+    <div id="loanModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="loanModalTitle">Add Loan/Advance</h2>
+                <button class="close-modal" id="closeLoanModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="loanForm">
+                <div class="modal-body">
+                    <input type="hidden" name="employee_id" id="loanEmployeeId">
+                    <div class="form-group">
+                        <label>Employee</label>
+                        <input type="text" id="loanEmployeeName" readonly class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select name="type" class="form-control" required>
+                            <option value="Loan">Loan</option>
+                            <option value="Advance">Advance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Amount (K)</label>
+                        <input type="number" name="total_amount" step="0.01" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Monthly Deduction (K)</label>
+                        <input type="number" name="monthly_deduction" step="0.01" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea name="remarks" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelLoanBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Loan/Advance
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payslip Preview Modal -->
+    <div id="payslipModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Payslip Preview</h2>
+                <button class="close-modal" id="closePayslipModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="payslipContent" class="payslip-preview">
+                    <!-- Payslip content will be dynamically generated -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closePayslipPreview">Close</button>
+                <button class="btn btn-danger" id="deletePayslipBtn">
+                    <i class="fas fa-trash"></i> Delete Payslip
+                </button>
+                <button class="btn btn-success" id="emailPayslipBtn">
+                    <i class="fas fa-envelope"></i> Email Payslip
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Employee Modal -->
+    <div id="deleteEmployeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Delete Employee</h2>
+                <button class="close-modal" id="closeDeleteEmployeeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Employee to Delete</label>
+                    <select id="deleteEmployeeSelect" class="form-control">
+                        <option value="">-- Select Employee --</option>
+                    </select>
+                </div>
+                <div id="deleteEmployeeInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #fff3cd; border-radius: 4px; border-left: 4px solid #ffc107;">
+                    <h4 style="color: #856404; margin-bottom: 0.5rem;">⚠️ Warning: This action cannot be undone!</h4>
+                    <p style="margin: 0.5rem 0; color: #856404;">This will permanently delete:</p>
+                    <ul style="color: #856404; margin: 0.5rem 0;">
+                        <li>Employee record</li>
+                        <li>All payroll records for this employee</li>
+                        <li>All payslips for this employee</li>
+                        <li>All loans/advances for this employee</li>
+                    </ul>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: white; border-radius: 4px;">
+                        <strong>Employee Details:</strong>
+                        <div id="deleteEmployeeDetails"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDeleteEmployee">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteEmployee" disabled>
+                    <i class="fas fa-trash"></i> Permanently Delete Employee
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Activity Log Panel -->
+    <div id="activityLog" class="activity-log" style="display: none;">
+        <div class="activity-header">
+            <h3><i class="fas fa-history"></i> Activity Log</h3>
+            <button id="closeActivityLog"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="activityContent" class="activity-content">
+            <!-- Activity logs will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="script.js"></script>
+    <script src="payroll-engine.js"></script>
+    <script src="payslip-generator.js"></script>
+    <script src="email-handler.js"></script>
+    <script src="reports.js"></script>
+</body>
+</html>
