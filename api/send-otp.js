@@ -32,8 +32,8 @@ module.exports = async (req, res) => {
       type = 'signup',
       smtpHost = 'smtp.gmail.com',
       smtpPort = 587,
-      smtpEmail,
-      smtpPassword,
+      smtpEmail = process.env.SMTP_EMAIL || req.body.smtpEmail,
+      smtpPassword = process.env.SMTP_PASSWORD || req.body.smtpPassword,
       senderName = 'East Boundary Systems'
     } = req.body;
 

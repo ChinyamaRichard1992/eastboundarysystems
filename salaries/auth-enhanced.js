@@ -1017,7 +1017,12 @@ class EnhancedAuthSystem {
         }
     }
 
-    getUsers() {
+    async getUsers() {
+        // Use cloud database if available
+        if (window.cloudDB && !window.cloudDB.useLocalStorage) {
+            return await window.cloudDB.getUsers();
+        }
+        // Fallback to localStorage
         const users = localStorage.getItem('ebs_users');
         return users ? JSON.parse(users) : [];
     }
